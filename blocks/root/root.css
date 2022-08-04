@@ -1,0 +1,8 @@
+.root {
+    max-width: 100%;
+    padding: 0;
+    background-color: #000000;
+    box-sizing: border-box;
+
+    /* border: 3px rgb(0, 120, 22) solid; */
+  }

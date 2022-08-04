@@ -1,0 +1,17 @@
+.header__logo {
+  box-sizing: content-box;
+  margin: 0;
+  padding-top: 0;
+  max-width: 142px;
+  min-height: 33px;
+  background-image: url("../../../images/Mesto.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  }
+
+  /* @media screen and (max-width: 550px) {
+    .header__logo {
+      max-width: 142px;
+      max-height: 42px;
+    }
+  } */
