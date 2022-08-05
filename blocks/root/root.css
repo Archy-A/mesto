@@ -3,6 +3,12 @@
     padding: 0;
     background-color: #000000;
     box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 
-    /* border: 3px rgb(0, 120, 22) solid; */
+@media screen and (max-width: 700px) {
+  .root {
+      padding: 0;
+    }
   }
