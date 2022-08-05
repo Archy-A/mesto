@@ -13,6 +13,9 @@
   background-color: #000000;
   margin-right: 0px;
   margin-left: auto;
-
   border: 2px rgb(255, 255, 255) solid;
+}
+
+.profile__add-button:hover {
+  opacity: 0.5;
 }
