@@ -13,3 +13,7 @@
 .popup__edit-name::placeholder{
   color: black;
 }
+
+.popup__edit-name:focus {
+  outline: none;
+ }

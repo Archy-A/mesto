@@ -6,6 +6,10 @@
   box-sizing: content-box;
   min-width: 508px;
   min-height: 422px;
-
-  /* border: 1px rgb(235, 14, 14) solid; */
 }
+
+@media screen and (max-width: 700px) {
+  .popup__container {
+    min-width: 100px;
+    }
+  }

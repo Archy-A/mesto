@@ -14,3 +14,7 @@
 .popup__edit-activity::placeholder{
   color: black;
 }
+
+.popup__edit-activity:focus {
+  outline: none;
+ }
