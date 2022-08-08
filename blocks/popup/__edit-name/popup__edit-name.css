@@ -7,4 +7,9 @@
   margin: 0;
   padding: 0;
   margin-bottom: 13px;
+  border: none;
+}
+
+.popup__edit-name::placeholder{
+  color: black;
 }

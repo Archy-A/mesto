@@ -8,4 +8,9 @@
   padding: 0;
   margin-top: 30px;
   margin-bottom: 13px;
+  border: none;
+}
+
+.popup__edit-activity::placeholder{
+  color: black;
 }
