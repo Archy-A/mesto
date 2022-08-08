@@ -1,0 +1,18 @@
+.popup__save-info {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+  min-width: 358px;
+  min-height: 50px;
+  margin-top: 48px;
+}

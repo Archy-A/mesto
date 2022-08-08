@@ -25,3 +25,13 @@
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
+
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/__close/popup__close.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__content/popup__content.css);
+@import url(../blocks/popup/__edit-activity/popup__edit-activity.css);
+@import url(../blocks/popup/__edit-name/popup__edit-name.css);
+@import url(../blocks/popup/__header/popup__header.css);
+@import url(../blocks/popup/__save-info/popup__save-info.css);
+@import url(../blocks/popup/__line/popup__line.css);
