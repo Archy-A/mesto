@@ -1,9 +1,9 @@
-.element__place_like {
+.element__like {
   margin: 0;
   padding: 0;
   min-width: 24px;
   max-height: 19px;
-  background-image: url("../../../../images/Like.svg");
+  background-image: url("../../../images/Like.svg");
   background-color: #ffffff;
   background-repeat: no-repeat;
   background-position: center;
@@ -17,6 +17,6 @@
   cursor: pointer;
 }
 
-.element__place_like:hover {
+.element__like:hover {
   opacity: 0.5;
 }

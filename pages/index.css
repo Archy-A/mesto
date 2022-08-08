@@ -19,10 +19,10 @@
 
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
+@import url(../blocks/element/__like/element__like.css);
+@import url(../blocks/element/__name/element__name.css);
 @import url(../blocks/element/__picture/element__picture.css);
 @import url(../blocks/element/__place/element__place.css);
-@import url(../blocks/element/__place/_name/element__place_name.css);
-@import url(../blocks/element/__place/_like/element__place_like.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
