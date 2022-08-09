@@ -17,6 +17,7 @@ const togglePopup = function () {
 editButton.addEventListener('click', togglePopup);
 closeEditButton.addEventListener('click', togglePopup);
 
+
 const savePopup = function () {
   popup.classList.toggle('popup_opened');
   profileInfoName.textContent = popupEditName.value;
@@ -24,3 +25,4 @@ const savePopup = function () {
 }
 
 saveButton.addEventListener('click', savePopup);
+

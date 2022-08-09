@@ -88,18 +88,27 @@
         <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
 
+    <!-- блок div на всю страницу (position fixed c затемнением) -->
     <section class="popup">
+
+      <!-- модальное окно, которое просто расположено по центру экрана -->
       <div class="popup__container">
+
+        <!-- кнопка закрытия, absolute -->
         <img class="popup__close" src="./images/Close.svg" alt="закрыть">
-        <div class="popup__content">
+
+        <!-- форма -->
+        <form class="popup__content">
           <h2 class="popup__header">Редактировать профиль</h2>
           <input type="text" placeholder="Имя" class="popup__edit-name">
           <div class="popup__line"></div>
           <input type="text" placeholder="Род деятельности" class="popup__edit-activity">
           <div class="popup__line"></div>
           <button class="popup__save-info">Сохранить</button>
-        </div>
+        </form>
+
       </div>
+
     </section>
 
   </div>
