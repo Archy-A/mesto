@@ -17,12 +17,6 @@ const togglePopup = function () {
 editButton.addEventListener('click', togglePopup);
 closeEditButton.addEventListener('click', togglePopup);
 
-console.log(profileInfoName.textContent);
-console.log(profileInfoActivity.textContent);
-
-console.log(popupEditName.textContent);
-console.log(popupEditActivity.textContent);
-
 const savePopup = function (evt) {
   evt.preventDefault();
   popup.classList.toggle('popup_opened');
