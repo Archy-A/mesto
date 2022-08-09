@@ -17,12 +17,17 @@ const togglePopup = function () {
 editButton.addEventListener('click', togglePopup);
 closeEditButton.addEventListener('click', togglePopup);
 
+console.log(profileInfoName.textContent);
+console.log(profileInfoActivity.textContent);
 
-const savePopup = function () {
+console.log(popupEditName.textContent);
+console.log(popupEditActivity.textContent);
+
+const savePopup = function (evt) {
+  evt.preventDefault();
   popup.classList.toggle('popup_opened');
   profileInfoName.textContent = popupEditName.value;
   profileInfoActivity.textContent = popupEditActivity.value;
 }
 
 saveButton.addEventListener('click', savePopup);
-
