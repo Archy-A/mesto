@@ -7,6 +7,7 @@
   background-image: url("../../../images/Mesto.svg");
   background-repeat: no-repeat;
   background-size: cover;
+  transform: scale(1.08);
   }
 
 @media screen and (max-width: 700px) {
