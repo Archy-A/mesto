@@ -1,11 +1,22 @@
 .popup__close {
   margin: 0;
   padding: 0;
-  max-width: 32px;
-  max-height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   box-sizing: border-box;
   align-self: flex-end;
   margin-bottom: 8px;
+  background-image: url("../../../images/Close.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.popup__close:hover {
+  opacity: 0.5;
 }
 
 @media screen and (max-width: 700px) {

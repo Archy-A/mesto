@@ -13,7 +13,6 @@
 
     <header class="header">
       <div class="header__logo"></div>
-      <div class="header__line"></div>
     </header>
 
     <main>
@@ -22,7 +21,7 @@
         <img class="profile__avatar" src="./images/Kusto.jpg" alt="На фото Жак-Ив Кусто.">
         <div class="profile__info">
           <div class="profile__group">
-            <p class="profile__name">Жак-Ив Кусто</p>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__activity">Исследователь океана</p>
           </div>
           <button type="button" class="profile__edit-button"></button>
@@ -32,53 +31,53 @@
 
       <section class="elements">
 
-        <div class="element">
+        <article class="element">
           <img class="element__picture" src="./images/Karachevsk.jpg" alt="Фотография Карачаевск.">
           <div class="element__place">
-            <p class="element__name">Карачаевск</p>
+            <h2 class="element__name">Карачаевск</h2>
             <button type="button" class="element__like"></button >
           </div>
-        </div>
+        </article>
 
-        <div class="element">
+        <article class="element">
           <img class="element__picture" src="./images/Elbrus.jpg" alt="Фотография гора Эльбрус.">
           <div class="element__place">
-            <p class="element__name">Гора Эльбрус</p>
+            <h2 class="element__name">Гора Эльбрус</h2>
             <button type="button" class="element__like"></button >
           </div>
-        </div>
+        </article>
 
-        <div class="element">
+        <article class="element">
           <img class="element__picture" src="./images/Dombai.jpg" alt="Фотография Домбай.">
           <div class="element__place">
-            <p class="element__name">Домбай</p>
+            <h2 class="element__name">Домбай</h2>
             <button type="button" class="element__like"></button >
           </div>
-        </div>
+        </article>
 
-        <div class="element">
+        <article class="element">
           <img class="element__picture" src="./images/Elbrus.jpg" alt="Фотография гора Эльбрус.">
           <div class="element__place">
-            <p class="element__name">Гора Эльбрус</p>
+            <h2 class="element__name">Гора Эльбрус</h2>
             <button type="button" class="element__like"></button >
           </div>
-        </div>
+        </article>
 
-        <div class="element">
+        <article class="element">
           <img class="element__picture" src="./images/Dombai.jpg" alt="Фотография Домбай.">
           <div class="element__place">
-            <p class="element__name">Домбай</p>
+            <h2 class="element__name">Домбай</h2>
             <button type="button" class="element__like"></button >
           </div>
-        </div>
+        </article>
 
-        <div class="element">
+        <article class="element">
           <img class="element__picture" src="./images/Karachevsk.jpg" alt="Фотография Карачаевск.">
           <div class="element__place">
-            <p class="element__name">Карачаево-Черкессия</p>
+            <h2 class="element__name">Карачаево-Черкессия</h2>
             <button type="button" class="element__like"></button >
           </div>
-        </div>
+        </article>
 
       </section>
 
@@ -88,28 +87,18 @@
         <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
 
-    <!-- блок div на всю страницу (position fixed c затемнением) -->
-    <section class="popup">
 
-      <!-- модальное окно, которое просто расположено по центру экрана -->
+    <div class="popup">
       <div class="popup__container">
-
-        <!-- кнопка закрытия -->
-        <img class="popup__close" src="./images/Close.svg" alt="закрыть">
-
-        <!-- форма -->
-        <form class="popup__content">
+        <button type="button" class="popup__close"></button>
+        <form method="post" name="editProfile" class="popup__content">
           <h2 class="popup__header">Редактировать профиль</h2>
-          <input type="text" placeholder="Имя" class="popup__edit-name">
-          <div class="popup__line"></div>
-          <input type="text" placeholder="Род деятельности" class="popup__edit-activity">
-          <div class="popup__line"></div>
-          <button class="popup__save-info">Сохранить</button>
+          <input type="text" name="profileName" placeholder="Имя" class="popup__edit popup__edit-name">
+          <input type="text" name="profileActivity" placeholder="Род деятельности" class="popup__edit popup__edit-activity">
+          <button  type="submit" class="popup__save-info">Сохранить</button>
         </form>
-
       </div>
-
-    </section>
+    </div>
 
   </div>
 
