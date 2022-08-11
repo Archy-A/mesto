@@ -18,64 +18,69 @@
     <main>
 
       <section class="profile">
-        <img class="profile__avatar" src="./images/Kusto.jpg" alt="На фото Жак-Ив Кусто.">
+
+        <img class="profile__avatar" src="./images/Kusto.jpg" alt="Жак-Ив Кусто.">
+
         <div class="profile__info">
           <div class="profile__group">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__activity">Исследователь океана</p>
           </div>
-          <button type="button" class="profile__edit-button"></button>
+
+          <button type="button" class="profile__edit-button" aria-label="Карандаш, редактировать профиль"></button>
         </div>
-        <button type="button" class="profile__add-button"></button>
+
+        <button type="button" class="profile__add-button" aria-label="Плюсик, добавить профиль"></button>
+
       </section>
 
       <section class="elements">
 
         <article class="element">
-          <img class="element__picture" src="./images/Karachevsk.jpg" alt="Фотография Карачаевск.">
+          <img class="element__picture" src="./images/Karachevsk.jpg" alt="Старый монастырь в горной местности окруженный лесом, локация: Карачаево-Черкессия.">
           <div class="element__place">
             <h2 class="element__name">Карачаевск</h2>
-            <button type="button" class="element__like"></button >
+            <button type="button" class="element__like" aria-label="Сердечко, поставить лайк"></button >
           </div>
         </article>
 
         <article class="element">
-          <img class="element__picture" src="./images/Elbrus.jpg" alt="Фотография гора Эльбрус.">
+          <img class="element__picture" src="./images/Elbrus.jpg" alt="гора Эльбрус в далеке, виден только пик горы, а на первом плане поля и небольшие холмы.">
           <div class="element__place">
             <h2 class="element__name">Гора Эльбрус</h2>
-            <button type="button" class="element__like"></button >
+            <button type="button" class="element__like" aria-label="Сердечко, поставить лайк"></button >
           </div>
         </article>
 
         <article class="element">
-          <img class="element__picture" src="./images/Dombai.jpg" alt="Фотография Домбай.">
+          <img class="element__picture" src="./images/Dombai.jpg" alt="Горы, на лижнем плане находится лес на склоне горы, а за ним в далеке высокая гора без леса, на ее пике лежит снег. Локация: Домбай.">
           <div class="element__place">
             <h2 class="element__name">Домбай</h2>
-            <button type="button" class="element__like"></button >
+            <button type="button" class="element__like" aria-label="Сердечко, поставить лайк"></button >
           </div>
         </article>
 
         <article class="element">
-          <img class="element__picture" src="./images/Elbrus.jpg" alt="Фотография гора Эльбрус.">
+          <img class="element__picture" src="./images/Elbrus.jpg" alt="гора Эльбрус в далеке, виден только пик горы, а на первом плане поля и небольшие холмы.">
           <div class="element__place">
             <h2 class="element__name">Гора Эльбрус</h2>
-            <button type="button" class="element__like"></button >
+            <button type="button" class="element__like" aria-label="Сердечко, поставить лайк"></button >
           </div>
         </article>
 
         <article class="element">
-          <img class="element__picture" src="./images/Dombai.jpg" alt="Фотография Домбай.">
+          <img class="element__picture" src="./images/Dombai.jpg" alt="Горы, на лижнем плане находится лес на склоне горы, а за ним в далеке высокая гора без леса, на ее пике лежит снег. Локация: Домбай.">
           <div class="element__place">
             <h2 class="element__name">Домбай</h2>
-            <button type="button" class="element__like"></button >
+            <button type="button" class="element__like" aria-label="Сердечко, поставить лайк"></button >
           </div>
         </article>
 
         <article class="element">
-          <img class="element__picture" src="./images/Karachevsk.jpg" alt="Фотография Карачаевск.">
+          <img class="element__picture" src="./images/Karachevsk.jpg" alt="Старый монастырь в горной местности окруженный лесом, локация: Карачаево-Черкессия.">
           <div class="element__place">
             <h2 class="element__name">Карачаево-Черкессия</h2>
-            <button type="button" class="element__like"></button >
+            <button type="button" class="element__like" aria-label="Сердечко, поставить лайк"></button >
           </div>
         </article>
 
@@ -90,12 +95,12 @@
 
     <div class="popup">
       <div class="popup__container">
-        <button type="button" class="popup__close"></button>
+        <button type="button" class="popup__close" aria-label="Крестик, закрыть окно рекдактирования"></button>
         <form method="post" name="editProfile" class="popup__content">
           <h2 class="popup__header">Редактировать профиль</h2>
           <input type="text" name="profileName" placeholder="Имя" class="popup__edit popup__edit-name">
           <input type="text" name="profileActivity" placeholder="Род деятельности" class="popup__edit popup__edit-activity">
-          <button  type="submit" class="popup__save-info">Сохранить</button>
+          <button  type="submit" class="popup__save-info" aria-label="Сохранить изменения после редактирования профиля">Сохранить</button>
         </form>
       </div>
     </div>

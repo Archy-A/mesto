@@ -6,10 +6,6 @@
     justify-self: center;
     max-width: 100%;
     box-sizing: content-box;
-
     border-radius: 3%;
     overflow: hidden;
-
-    /* border-bottom: 1px solid #545454; */
-
   }

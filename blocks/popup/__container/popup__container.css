@@ -5,7 +5,6 @@
   flex-direction: column;
   box-sizing: content-box;
   min-width: 508px;
-  min-height: 422px;
 }
 
 @media screen and (max-width: 700px) {
