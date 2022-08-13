@@ -5,7 +5,7 @@ const closeEditButton = popup.querySelector('.popup__close');
 const profileInfoName = document.querySelector('.profile__name');
 const profileInfoActivity = document.querySelector('.profile__activity');
 const popupEditName = popup.querySelector('.popup__edit_name_copy');
-const popupEditActivity = popup.querySelector('.popup__edit-activity');
+const popupEditActivity = popup.querySelector('.popup__edit_activity_title');
 
 
 const togglePopup = function () {
