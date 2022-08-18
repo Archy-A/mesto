@@ -27,3 +27,44 @@ const saveProfile = function (evt) {
 }
 
 formSubmit.addEventListener('submit', saveProfile);
+
+//>>>>>>>>>   Add photo from array    >>>>>>>>>>>>>>>>>
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+const elementTemplate = document.querySelector('.element-template').content;
+const elementList = document.querySelector('.elements');
+
+initialCards.forEach(function (element) {
+  const elementCard = elementTemplate.cloneNode(true);
+  elementCard.querySelector('.element__picture').src = element.link;
+  elementCard.querySelector('.element__name').textContent = element.name;
+  elementList.append(elementCard);
+})
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
