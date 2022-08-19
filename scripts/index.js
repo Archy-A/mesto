@@ -1,4 +1,3 @@
-//>>>>>>>>>   Add photo from array    >>>>>>>>>>>>>>>>>
 const initialCards = [
   {
     name: 'Архыз',
@@ -26,19 +25,67 @@ const initialCards = [
   }
 ];
 
+// [...likeButtons].forEach(function (likeButton) {
+//>>>>>>>>>>>>>>>>>>>>>>  LIKE  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// let likeButton = [];
+
+// const likeFunc = function (element) {
+//   let setLike = null;
+//   const likeButton = element.querySelector('.element__like');
+//   console.log(setLike);
+//   likeButton.classList.add('element__like_pressed');
+
+  // likeButton.addEventListener("click", () => {
+  //   if (setLike) {
+  //     console.log('like!');
+  //     likeButton.classList.add('element__like_pressed');
+  //     setLike = 'pressed';
+  //   }
+  //   else {
+  //     likeButton.classList.remove('element__like_pressed');
+  //     setLike = null;
+  //   }
+  // });
+// }
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
 const elementTemplate = document.querySelector('.element-template').content;
 let elementList = document.querySelector('.elements');
+let setLikePressed = null;
 
 initialCards.forEach(function (element) {
   const elementCard = elementTemplate.cloneNode(true);
   elementCard.querySelector('.element__picture').src = element.link;
   elementCard.querySelector('.element__name').textContent = element.name;
+
+  const likeButton = elementCard.querySelector('.element__like');
+  likeButton.addEventListener("click", () => {
+    if (setLikePressed  === null) {
+      console.log('like!!!');
+      likeButton.classList.add('element__like_pressed');
+      setLikePressed = 1;
+    }
+    else {
+      console.log('not like');
+      likeButton.classList.remove('element__like_pressed');
+      setLikePressed = null;
+    }
+  });
+
   elementList.append(elementCard);
-})
+  // function handleDelete(e) {
+//   const itemElement = e.target.closest('.item');
+//   itemElement.remove();
+});
 
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
+
+
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>  EDIT PROFILE & ADD NEW PLACE  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const popup = document.querySelector('.popup');
 const editButton = document.querySelector('.profile__edit-button');
 const formSubmit = popup.querySelector('.popup__content');
@@ -51,21 +98,17 @@ const addButton = document.querySelector('.profile__add-button');
 const popupHeader = popup.querySelector('.popup__header');
 const popupSaver = popup.querySelector('.popup__save-info');
 
-
 const togglePopup = function (evt) {
-  if (evt.target.classList.value === 'profile__edit-button') {
-    if (!popup.classList.contains('popup_opened')) {
+  if ((evt.target.classList.value === 'profile__edit-button') && (!popup.classList.contains('popup_opened'))) {
       popupHeader.textContent = 'Редактировать профиль';
       const popupSaveName = popup.querySelector('.popup__save-info');
       popupSaveName.textContent = 'Сохранить';
       popupEditName.value = profileInfoName.textContent;
       popupEditActivity.value = profileInfoActivity.textContent;
       document.getElementsByName('profileName')[0].placeholder='Имя';
-    }
    }
 
-  else if (evt.target.classList.value === 'profile__add-button') {
-    if (!popup.classList.contains('popup_opened')) {
+  else if ((evt.target.classList.value === 'profile__add-button') && (!popup.classList.contains('popup_opened'))) {
       popupHeader.textContent = 'Новое место';
       document.getElementsByName('profileName')[0].placeholder='Название';
       document.getElementsByName('profileActivity')[0].placeholder='Ссылка на картинку';
@@ -73,7 +116,6 @@ const togglePopup = function (evt) {
       popupEditActivity.value = 'Ссылка на картинку';
       const popupSaveName = popup.querySelector('.popup__save-info');
       popupSaveName.textContent = 'Создать';
-    }
    }
 
   popup.classList.toggle('popup_opened');
@@ -83,8 +125,7 @@ closeEditButton.addEventListener('click', togglePopup);
 editButton.addEventListener('click', togglePopup);
 addButton.addEventListener('click', togglePopup);
 
-
-const saveProfile = function (evt) {
+const saveButton = function (evt) {
   evt.preventDefault();
 
   if (document.getElementsByName('profileName')[0].placeholder === 'Название') {
@@ -94,10 +135,27 @@ const saveProfile = function (evt) {
     const linkValid = popupEditActivity.value.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
     if (linkValid !=null) {
       elementList.prepend(elementCard);
+
+//=============================
+  const likeButton = document.querySelector('.element__like');
+  likeButton.addEventListener("click", () => {
+   if (setLikePressed  === null) {
+      console.log('like!!!');
+      likeButton.classList.add('element__like_pressed');
+      setLikePressed = 1;
+    }
+   else {
+     console.log('not like');
+      likeButton.classList.remove('element__like_pressed');
+      setLikePressed = null;
+   }
+   });
+//=============================
+
       togglePopup(evt);
     }
     else {
-      popupEditActivity.value = 'АЛОЭ, ВВЕДИТЕ КОРРЕКТНУЮ ССЫЛКУ!!!';
+      popupEditActivity.value = 'ВВЕДИТЕ КОРРЕКТНУЮ ССЫЛКУ!!!';
     }
   }
 
@@ -109,19 +167,102 @@ const saveProfile = function (evt) {
 
 }
 
-formSubmit.addEventListener('submit', saveProfile);
-
-
-
+formSubmit.addEventListener('submit', saveButton);
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
 
+// const TODOS = [
+//   'Сделать проектную работу',
+//   'Полить цветы',
+//   'Пройти туториал по Реакту',
+//   'Сделать фронт для своего проекта',
+//   'Погулять c собакой',
+//   'Разобраться в замыканиях',
+//   'Решить задачу на Codewars',
+// ];
 
+// const listElement = document.querySelector('.app__list');
+// const formElement = document.querySelector('.app__form');
+// const inputElement = formElement.querySelector('.app__input');
+// const templateElement = document.querySelector('.template');
+// const submitButtonElement = document.querySelector('.app__submit-btn');
 
+// let editedElement = null;
 
+// function handleSubmit(e) {
+//   e.preventDefault();
 
+//   const text = inputElement.value;
+//   inputElement.value = '';
 
+//   if (editedElement) {
+//     editedElement.querySelector('.item__text').textContent = text;
+//     setAddMode();
+//   } else {
+//     const itemElement = createItem(text);
+//     listElement.prepend(itemElement);
+//   }
+// }
+
+// function handleDelete(e) {
+//   const itemElement = e.target.closest('.item');
+//   itemElement.remove();
+// }
+
+// function handleEdit(e) {
+//   const itemElement = e.target.closest('.item');
+//   setEditMode(itemElement);
+// }
+
+// function handleDuplicate(e) {
+//   const itemElement = e.target.closest('.item');
+//   const clone = itemElement.cloneNode(true);
+//   addListeners(clone);
+//   itemElement.after(clone);
+// }
+
+// function setEditMode(elem) {
+//   const text = elem.querySelector('.item__text').textContent;
+//   inputElement.value = text;
+//   inputElement.focus();
+
+//   submitButtonElement.textContent = 'Сохранить';
+//   editedElement = elem;
+// }
+
+// function setAddMode() {
+//   editedElement = null;
+//   submitButtonElement.textContent = 'Добавить';
+// }
+
+// function addListeners(element) {
+//   element
+//     .querySelector('.item__btn_type_delete')
+//     .addEventListener('click', handleDelete);
+
+//   element
+//     .querySelector('.item__btn_type_edit')
+//     .addEventListener('click', handleEdit);
+
+//   element
+//     .querySelector('.item__btn_type_duplicate')
+//     .addEventListener('click', handleDuplicate);
+// }
+
+// function createItem(text) {
+//   const newItemElement = templateElement.content.cloneNode(true);
+//   newItemElement.querySelector('.item__text').textContent = text;
+//   addListeners(newItemElement);
+//   return newItemElement;
+// }
+
+// TODOS.forEach((text) => {
+//   const itemElement = createItem(text);
+//   listElement.prepend(itemElement);
+// });
+
+// formElement.addEventListener('submit', handleSubmit);
 
 
 
