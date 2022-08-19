@@ -8,4 +8,5 @@
     box-sizing: content-box;
     border-radius: 3%;
     overflow: hidden;
+    position: relative;
   }

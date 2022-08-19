@@ -52,7 +52,6 @@ const initialCards = [
 
 const elementTemplate = document.querySelector('.element-template').content;
 let elementList = document.querySelector('.elements');
-let setLikePressed = null;
 
 initialCards.forEach(function (element) {
   const elementCard = elementTemplate.cloneNode(true);
@@ -61,15 +60,11 @@ initialCards.forEach(function (element) {
 
   const likeButton = elementCard.querySelector('.element__like');
   likeButton.addEventListener("click", () => {
-    if (setLikePressed  === null) {
-      console.log('like!!!');
+    if (!likeButton.classList.contains('element__like_pressed')) {
       likeButton.classList.add('element__like_pressed');
-      setLikePressed = 1;
     }
     else {
-      console.log('not like');
       likeButton.classList.remove('element__like_pressed');
-      setLikePressed = null;
     }
   });
 
@@ -139,16 +134,12 @@ const saveButton = function (evt) {
 //=============================
   const likeButton = document.querySelector('.element__like');
   likeButton.addEventListener("click", () => {
-   if (setLikePressed  === null) {
-      console.log('like!!!');
+    if (!likeButton.classList.contains('element__like_pressed')) {
       likeButton.classList.add('element__like_pressed');
-      setLikePressed = 1;
     }
-   else {
-     console.log('not like');
+    else {
       likeButton.classList.remove('element__like_pressed');
-      setLikePressed = null;
-   }
+    }
    });
 //=============================
 
