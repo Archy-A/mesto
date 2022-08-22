@@ -1,0 +1,9 @@
+.popup-photo__fullview {
+  margin: 0;
+  padding: 0;
+  max-width: 816px;
+  max-height: 540px;
+  box-sizing: border-box;
+  object-fit: cover;
+  padding-right: 40px;
+}
