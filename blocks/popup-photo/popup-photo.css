@@ -20,7 +20,7 @@
   visibility: hidden;
   transition: 0.5s opacity, 0.5s visibility;
 
-  /* border: 1px rgb(235, 14, 14) solid; */
+  border: 1px rgb(235, 14, 14) solid;
 }
 
 @media screen and (max-width: 700px) {
