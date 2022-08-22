@@ -67,11 +67,12 @@ closePhotoButton.addEventListener('click', closePopupFullviewHandler);
 const togglePopupFullview = function (elementCard) {
   const popupFullview = document.querySelector('.popup-photo');
   const elementFullview = elementCard.querySelector('.element__picture');
+  const elementName = elementCard.querySelector('.element__name');
   const elementLink = elementCard.querySelector('.element__picture').src;
   elementFullview.addEventListener("click", () => {
     const popupPhotoName = popupFullview.querySelector('.popup-photo__name');
     const popupPhotoLink = popupFullview.querySelector('.popup-photo__fullview');
-    popupPhotoName.textContent = elementFullview.textContent;
+    popupPhotoName.textContent = elementName.textContent;
     popupPhotoLink.src = elementLink;
     popupFullview.classList.toggle('popup-photo_opened');
   });

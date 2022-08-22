@@ -11,4 +11,9 @@
   white-space: nowrap;
   overflow: hidden;
   margin-top: 10px;
+  height: 12px;
+
+  overflow: hidden;
+
+  /* border: 1px rgb(206, 235, 14) solid; */
 }
