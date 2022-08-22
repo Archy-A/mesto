@@ -6,8 +6,6 @@
   box-sizing: content-box;
   justify-content: center;
   height: 90vh;
-
-  border: 1px rgb(14, 14, 235) solid;
 }
 
 @media screen and (max-width: 700px) {
