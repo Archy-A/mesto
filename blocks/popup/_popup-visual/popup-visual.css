@@ -1,5 +1,5 @@
-.popup_opened {
+.popup-visual {
   display: flex;
-  opacity: 1;
   visibility: visible;
+  opacity: 1;
 }

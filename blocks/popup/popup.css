@@ -1,10 +1,12 @@
 .popup {
+  opacity: 0;
+  visibility: hidden;
+
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   box-sizing: content-box;
-  background: rgba(0,0,0,.5);
   margin-left: auto;
   margin-right: auto;
   position: fixed;
@@ -16,8 +18,4 @@
   align-items: center;
   justify-self: center;
   align-self: center;
-
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.5s opacity, 0.5s visibility;
 }
