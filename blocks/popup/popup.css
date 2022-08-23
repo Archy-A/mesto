@@ -1,10 +1,7 @@
 .popup {
-  opacity: 0;
-  visibility: hidden;
-
   margin: 0;
   padding: 0;
-  display: flex;
+  display: none;
   flex-direction: column;
   box-sizing: content-box;
   margin-left: auto;
@@ -18,4 +15,6 @@
   align-items: center;
   justify-self: center;
   align-self: center;
+
+  border: 6px rgb(235, 14, 14) solid;
 }

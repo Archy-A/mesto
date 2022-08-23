@@ -1,5 +1,4 @@
 const popup = document.querySelector('.popup');
-
 const formSubmit = popup.querySelector('.popup__form');
 const profileInfoName = document.querySelector('.profile__name');
 const profileInfoActivity = document.querySelector('.profile__activity');
@@ -36,6 +35,19 @@ const initialCards = [
   }
 ];
 
+
+const createCard = function (element) {
+  const elementCard = elementTemplate.cloneNode(true);
+  elementCard.querySelector('.element__name').textContent = element.name;
+  const cardImage = elementCard.querySelector('.element__picture');
+  cardImage.src = element.link;
+  cardImage.alt = element.name;
+  cardImage.addEventListener('click', onclick);
+  likeHandler(elementCard);
+  deleteHandler(elementCard);
+  return elementCard;
+}
+
 function likeHandler (elementCard) {
   const likeButton = elementCard.querySelector('.element__like');
   likeButton.addEventListener("click", () => {
@@ -63,24 +75,23 @@ const saveProfileHandler = function (evt) {
   profileInfoActivity.textContent = popupEditActivity.value;
   popupClose(evt);
 }
+
 const formEditPopup = document.querySelector('.popup__edit-form');
 formEditPopup.addEventListener('submit', saveProfileHandler);
 
-
 const saveCardHandler = function (evt) {
   evt.preventDefault();
-  const elementCard = elementTemplate.cloneNode(true);
   const popupCardName = document.querySelector('.popup__edit_card-name');
   const popupCardLink = document.querySelector('.popup__edit_card-link');
-  elementCard.querySelector('.element__name').textContent = popupCardName.value;
-  elementCard.querySelector('.element__picture').src = popupCardLink.value;
   const linkValid = popupCardLink.value.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
     if (linkValid !=null) {
-      likeHandler(elementCard);
-      deleteHandler(elementCard);
-      togglePopupFullview(elementCard);
+      const element = {
+        name: popupCardName.value,
+        link: popupCardLink.value
+      };
+      const elementCard = createCard(element);
       elementList.prepend(elementCard);
-      popupClose(evt);
+      popupClose(evt.target);
     }
     else {
       popupCardLink.value = 'ВВЕДИТЕ КОРРЕКТНУЮ ССЫЛКУ!!!';
@@ -93,99 +104,13 @@ formAddPopup.addEventListener('submit', saveCardHandler);
 
 const popupCardName = document.querySelector('.popup__edit_card-name');
 popupCardName.addEventListener('focus', function() {
-  popupCardName.setAttribute('placeholder', '')
+  popupCardName.setAttribute('placeholder', '');
 });
 
 const popupCardLink = document.querySelector('.popup__edit_card-link');
 popupCardLink.addEventListener('focus', function() {
-  popupCardLink.setAttribute('placeholder', '')
+  popupCardLink.setAttribute('placeholder', '');
 });
-//==============================================
-
-// //>>>>
-// // 1. Acquire a reference to our <form>.
-// //    This can also be done by setting <form name="blub" id="myAwsomeForm">:
-// //       var form = document.forms.blub;
-
-// var form = document.getElementById("myAwsomeForm");
-
-// // 2. Get a reference to our preferred element (link/button, see below) and
-// //    add an event listener for the "click" event.
-// document.getElementById("your-link-or-button-id").addEventListener("click", function () {
-//   form.submit();
-// });
-
-// // 3. any site in your javascript code:
-// document.getElementById('myAwsomeForm').submit();
-// //<<<<
-
-
-
-
-/* <input type="submit" name="btn1" id="btn1" value="Submit"/>
-
-$("#btn1").click(function(){
-$("#frm1").submit();
-}
-
-<input type="submit" name="btn2" id="btn2" value="Submit"/>
-
-$("#btn2").click(function(){
-$("#frm1").submit();
-} */
-
-// const closeButton = document.querySelectorAll('.popup__btn-close');
-// [...closeButton].forEach((closeButton) =>
-//    closeButton.addEventListener('click', popupClose));
-
-
-
-
-// const closePopupFullviewHandler = function () {
-//   const popupFullview = document.querySelector('.popup-photo');
-//   popupFullview.classList.remove('popup-photo_opened');
-// }
-// closePhotoButton.addEventListener('click', closePopupFullviewHandler);
-
-
-
-
-
-
-
-
-
-
-const togglePopupFullview = function (elementCard) {
-  const popupFullview = document.querySelector('.popup-photo');
-  const elementFullview = elementCard.querySelector('.element__picture');
-  const elementName = elementCard.querySelector('.element__name');
-  const elementLink = elementCard.querySelector('.element__picture').src;
-  elementFullview.addEventListener("click", () => {
-    const popupPhotoName = popupFullview.querySelector('.popup-photo__name');
-    const popupPhotoLink = popupFullview.querySelector('.popup-photo__fullview');
-    popupPhotoName.textContent = elementName.textContent;
-    popupPhotoLink.src = elementLink;
-    popupFullview.classList.toggle('popup-photo_opened');
-  });
-}
-
-const elementTemplate = document.querySelector('.element-template').content;
-let elementList = document.querySelector('.elements');
-
-initialCards.forEach(function (element) {
-  const elementCard = elementTemplate.cloneNode(true);
-  elementCard.querySelector('.element__picture').src = element.link;
-  elementCard.querySelector('.element__name').textContent = element.name;
-  likeHandler(elementCard);
-  deleteHandler(elementCard);
-  // togglePopupFullview(elementCard);
-  elementList.append(elementCard);
-});
-
-
-
-
 
 const cardPopup = document.querySelector('.popup-add');
 const imagePopup = document.querySelector('.popup-photo');
@@ -193,9 +118,12 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const popupEditName = profilePopup.querySelector('.popup__edit_name_copy');
 
+const onclick = function (evt) {console.log('onclick');
+  popupOpen(evt.target);
+}
 
-const popupOpen = function (evt) {
-  if ((evt.target.classList.value === 'profile__edit-button') && (!evt.target.classList.contains('popup-visual'))) {
+const popupOpen = function (element) {
+  if ((element.classList.value === 'profile__edit-button') && (!element.classList.contains('popup-visual'))) {
     profilePopup.classList.remove('popup-add');
     profilePopup.classList.add('popup-edit');
     profilePopup.classList.add('popup-visual');
@@ -203,28 +131,48 @@ const popupOpen = function (evt) {
     popupEditActivity.value = profileInfoActivity.textContent;
    }
 
-   else if ((evt.target.classList.value === 'profile__add-button') && (!evt.target.classList.contains('popup-visual'))) {
+   else if ((element.classList.value === 'profile__add-button') && (!element.classList.contains('popup-visual'))) {
     cardPopup.classList.remove('popup-edit');
     cardPopup.classList.add('popup-add');
     cardPopup.classList.add('popup-visual');
+    const popupCardName = document.querySelector('.popup__edit_card-name');
+    const popupCardLink = document.querySelector('.popup__edit_card-link');
+    popupCardName.value = '';
+    popupCardLink.value = '';
+    popupCardName.setAttribute('placeholder', 'Название');
+    popupCardLink.setAttribute('placeholder', 'Ссылка на картинку');
+   }
+
+   else if ((element.classList.value === 'element__picture')) {
+    const imagePopup = document.querySelector('.popup-photo');
+    const popupPhotoName = imagePopup.querySelector('.popup-photo__name');
+    const popupPhotoLink = imagePopup.querySelector('.popup-photo__fullview');
+    popupPhotoName.textContent = element.alt;
+    popupPhotoLink.src = element.src;
+    imagePopup.classList.add('popup-visual');
  }
 }
 
 const popupClose = function () {
   profilePopup.classList.remove('popup-visual');
   cardPopup.classList.remove('popup-visual');
+  imagePopup.classList.remove('popup-visual');
 }
-
 
 const closeButton = document.querySelectorAll('.popup__btn-close');
 [...closeButton].forEach((closeButton) =>
    closeButton.addEventListener('click', popupClose));
 
-addButton.addEventListener('click', popupOpen);
-editButton.addEventListener('click', popupOpen);
+addButton.addEventListener('click', onclick);
+editButton.addEventListener('click', onclick);
 
+const elementTemplate = document.querySelector('.element-template').content;
+let elementList = document.querySelector('.elements');
 
-
+initialCards.forEach(function (element) {
+  const elementCard = createCard(element);
+  elementList.append(elementCard);
+});
 
 
 
