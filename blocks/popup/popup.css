@@ -15,7 +15,6 @@
   justify-self: center;
   align-self: center;
 
-  z-index: 999;
   display: flex;
   visibility: hidden;
   opacity: 0;
