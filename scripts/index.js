@@ -46,17 +46,8 @@ const createCard = function (element) {
 
 function likeHandler (elementCard) {
   const likeButton = elementCard.querySelector('.element__like');
-
-
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle('element__like_pressed');
-
-    // if (!likeButton.classList.contains('element__like_pressed')) {
-    //   likeButton.classList.add('element__like_pressed');
-    // }
-    // else {
-    //   likeButton.classList.remove('element__like_pressed');
-    // }
   });
 }
 
@@ -65,12 +56,19 @@ function deleteHandler (elementCard) {
     deleteButton.addEventListener("click", (elementCard) => {
       const itemElement = elementCard.target.closest('.element');
       itemElement.remove();
+
+      // Оставил как есть, иначе не работает, вот логи элементов:
+
+      // console.log('itemElement', itemElement.classList);
+      //RESULT: itemElement DOMTokenList ['element', value: 'element']
+
+      // console.log('elementCard', elementCard.classList);
+      //RESULT: elementCard undefined
     });
 }
 
 const saveProfileHandler = function (evt) {
   evt.preventDefault();
-  console.log(popupEditActivity.value);
   profileInfoName.textContent = popupEditName.value;
   profileInfoActivity.textContent = popupEditActivity.value;
   popupClose(evt);
@@ -83,20 +81,13 @@ const saveCardHandler = function (evt) {
   evt.preventDefault();
   const popupCardName = document.querySelector('.popup__edit_card-name');
   const popupCardLink = document.querySelector('.popup__edit_card-link');
-  const linkValid = popupCardLink.value.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-    if (linkValid !=null) {
-      const element = {
-        name: popupCardName.value,
-        link: popupCardLink.value
-      };
-      const elementCard = createCard(element);
-      elementList.prepend(elementCard);
-      popupClose(evt.target);
-    }
-    else {
-      popupCardLink.value = 'ВВЕДИТЕ КОРРЕКТНУЮ ССЫЛКУ!!!';
-      console.log(popupCardLink.value);
-    }
+  const element = {
+    name: popupCardName.value,
+    link: popupCardLink.value
+    };
+  const elementCard = createCard(element);
+  elementList.prepend(elementCard);
+  popupClose(evt.target);
 }
 
 const formAddPopup = document.querySelector('.popup__add-form');
@@ -118,7 +109,7 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const popupEditName = profilePopup.querySelector('.popup__edit_name_copy');
 
-const onclick = function (evt) {console.log('onclick');
+const onclick = function (evt) {
   popupOpen(evt.target);
 }
 
@@ -167,7 +158,7 @@ addButton.addEventListener('click', onclick);
 editButton.addEventListener('click', onclick);
 
 const elementTemplate = document.querySelector('.element-template').content;
-let elementList = document.querySelector('.elements');
+const elementList = document.querySelector('.elements');
 
 initialCards.forEach(function (element) {
   const elementCard = createCard(element);
