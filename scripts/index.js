@@ -33,7 +33,8 @@ const initialCards = [
 
 
 const createCard = function (element) {
-  const elementCard = elementTemplate.cloneNode(true);
+  const elementCardTemplate = elementTemplate.cloneNode(true);
+  const elementCard = elementCardTemplate.querySelector('.element');
   elementCard.querySelector('.element__name').textContent = element.name;
   const cardImage = elementCard.querySelector('.element__picture');
   cardImage.src = element.link;
@@ -41,7 +42,7 @@ const createCard = function (element) {
   cardImage.addEventListener('click', onclick);
   likeHandler(elementCard);
   deleteHandler(elementCard);
-  return elementCard;
+  return elementCardTemplate;
 }
 
 function likeHandler (elementCard) {
@@ -53,17 +54,8 @@ function likeHandler (elementCard) {
 
 function deleteHandler (elementCard) {
   const deleteButton = elementCard.querySelector('.element__bin');
-    deleteButton.addEventListener("click", (elementCard) => {
-      const itemElement = elementCard.target.closest('.element');
-      itemElement.remove();
-
-      // Оставил как есть, иначе не работает, вот логи элементов:
-
-      // console.log('itemElement', itemElement.classList);
-      //RESULT: itemElement DOMTokenList ['element', value: 'element']
-
-      // console.log('elementCard', elementCard.classList);
-      //RESULT: elementCard undefined
+    deleteButton.addEventListener("click", () => {
+      elementCard.remove();
     });
 }
 
