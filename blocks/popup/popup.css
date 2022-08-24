@@ -1,7 +1,6 @@
 .popup {
   margin: 0;
   padding: 0;
-  display: none;
   flex-direction: column;
   box-sizing: content-box;
   margin-left: auto;
@@ -16,5 +15,14 @@
   justify-self: center;
   align-self: center;
 
-  border: 6px rgb(235, 14, 14) solid;
+  z-index: 999;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  filter: alpha(opacity=0);
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+
 }
