@@ -5,6 +5,8 @@
   flex-direction: column;
   box-sizing: content-box;
   min-width: 508px;
+
+  border: 3px rgb(14, 235, 47) solid;
 }
 
 @media screen and (max-width: 700px) {
