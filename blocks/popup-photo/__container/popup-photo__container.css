@@ -5,9 +5,6 @@
   flex-direction: column;
   box-sizing: content-box;
   justify-content: center;
-  height: 90vh;
-  margin-left: 150px;
-  margin-right: 150px;
 }
 
 @media screen and (max-width: 700px) {
