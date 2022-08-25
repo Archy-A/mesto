@@ -130,7 +130,7 @@ function openImagePopup(popup, image) {
 
 // popup open function for all elements: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function openPopup(popup) {
-  popup.classList.add('popup-visual');
+  popup.classList.add('popup-opened');
 }
 
 // popup close function for all elements: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -140,7 +140,7 @@ function onClosePopupRequest(evt) {
 }
 
 function closePopup(popup) {
-  popup.classList.remove('popup-visual');
+  popup.classList.remove('popup-opened');
 }
 
 // event listeners: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
