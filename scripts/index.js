@@ -95,7 +95,7 @@ const saveCardHandler = function (evt) {
   onClosePopupRequest(evt);
 }
 
-// OnClick processor for profilePopup, cardPopup, imagePopup: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// OnClick processors for profilePopup, cardPopup, imagePopup: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function openPropfilePopup() {
   inputFieldName.value = profileInfoName.textContent;
   inputFieldActivity.value = profileInfoActivity.textContent;
@@ -146,3 +146,38 @@ initialCards.forEach(function (element) {
   const elementCard = createCard(element);
   elementList.append(elementCard);
 });
+
+
+// validation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+formProfileEditing.addEventListener('submit', function (evt) {
+  evt.preventDefault();
+});
+
+const formError = formProfileEditing.querySelector(`.${inputFieldName.id}-error`);
+
+const showInputError = (element, errorMessage) => {
+  element.classList.add('popup__edit-error');
+  formError.textContent = errorMessage;
+  console.log('errorMessage = ', errorMessage);
+  formError.classList.add('form__input-error_active');
+};
+
+const hideInputError = (element) => {
+  element.classList.remove('popup__edit-error');
+  formError.classList.remove('form__input-error_active');
+  formError.textContent = '';
+};
+
+const isValid = () => {
+  if (!inputFieldName.validity.valid) {
+    showInputError(inputFieldName, inputFieldName.validationMessage);
+    formError.classList.add('form__input-error_active');
+  } else {
+    hideInputError(inputFieldName);
+    formError.classList.remove('form__input-error_active');
+  }
+};
+
+inputFieldName.addEventListener('input', isValid);
