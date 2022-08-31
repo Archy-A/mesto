@@ -205,6 +205,7 @@ const toggleButtonState = (inputList, buttonElement) => {
   }
 };
 
+
 const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll('.popup__edit'));
   const buttonElement = formElement.querySelector('.popup__save');
