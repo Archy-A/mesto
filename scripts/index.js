@@ -172,10 +172,11 @@ const showInputError = (formProfileEditing, element, errorMessage) => {
   errorElement.classList.add('form__input-error_active');
 };
 
-const hideInputError = (element) => {
+const hideInputError = (formProfileEditing, element) => {
+  const errorElement = formProfileEditing.querySelector(`.${element.id}-error`);
   element.classList.remove('popup__edit-error');
-  formError.classList.remove('form__input-error_active');
-  formError.textContent = '';
+  errorElement.classList.remove('form__input-error_active');
+  errorElement.textContent = '';
 };
 
 const isValid = (formProfileEditing, inputFieldName) => {
@@ -188,6 +189,21 @@ const isValid = (formProfileEditing, inputFieldName) => {
   }
 };
 
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  })
+};
+
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add('popup__save-inactive');
+    buttonElement.setAttribute("disabled", "");
+  } else {
+    buttonElement.classList.remove('popup__save-inactive');
+    buttonElement.removeAttribute("disabled");
+  }
+};
 
 const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll('.popup__edit'));
@@ -196,13 +212,10 @@ const setEventListeners = (formElement) => {
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       isValid(formElement, inputElement);
-
-      // Вызовем toggleButtonState и передадим ей массив полей и кнопку
       toggleButtonState(inputList, buttonElement);
     });
   });
 };
-
 
 const enableValidation = () => {
   const formList = Array.from(document.querySelectorAll('.popup__form'));
@@ -217,31 +230,3 @@ const enableValidation = () => {
 enableValidation();
 
 
-
-// Функция принимает массив полей
-
-const hasInvalidInput = (inputList) => {
-  // проходим по этому массиву методом some
-  return inputList.some((inputElement) => {
-    // Если поле не валидно, колбэк вернёт true
-    // Обход массива прекратится и вся функция
-    // hasInvalidInput вернёт true
-
-    return !inputElement.validity.valid;
-  })
-};
-
-
-// Функция принимает массив полей ввода
-// и элемент кнопки, состояние которой нужно менять
-
-const toggleButtonState = (inputList, buttonElement) => {
-  // Если есть хотя бы один невалидный инпут
-  if (hasInvalidInput(inputList)) {
-    // сделай кнопку неактивной
-    buttonElement.classList.add('popup__save-inactive');
-  } else {
-    // иначе сделай кнопку активной
-    buttonElement.classList.remove('popup__save-inactive');
-  }
-};
