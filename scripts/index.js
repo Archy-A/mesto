@@ -167,7 +167,7 @@ const showInputError = (formProfileEditing, element, errorMessage) => {
   }
 
   if (element.validity.tooShort) {
-    errorElement.textContent = "Имя должно быть не менее 2-х символов.";
+    errorElement.textContent = "Введите не менее 2-х символов.";
   }
   errorElement.classList.add('form__input-error_active');
 };
