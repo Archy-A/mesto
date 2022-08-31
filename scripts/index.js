@@ -157,11 +157,19 @@ formProfileEditing.addEventListener('submit', function (evt) {
 
 const formError = formProfileEditing.querySelector(`.${inputFieldName.id}-error`);
 
-const showInputError = (element, errorMessage) => {
+const showInputError = (formProfileEditing, element, errorMessage) => {
+  const errorElement = formProfileEditing.querySelector(`.${element.id}-error`);
   element.classList.add('popup__edit-error');
-  formError.textContent = errorMessage;
-  console.log('errorMessage = ', errorMessage);
-  formError.classList.add('form__input-error_active');
+  errorElement.textContent = errorMessage;
+
+  if (element.validity.valueMissing) {
+    errorElement.textContent = "Вы пропустили это поле.";
+  }
+
+  if (element.validity.tooShort) {
+    errorElement.textContent = "Имя должно быть не менее 2-х символов.";
+  }
+  errorElement.classList.add('form__input-error_active');
 };
 
 const hideInputError = (element) => {
@@ -170,14 +178,35 @@ const hideInputError = (element) => {
   formError.textContent = '';
 };
 
-const isValid = () => {
+const isValid = (formProfileEditing, inputFieldName) => {
   if (!inputFieldName.validity.valid) {
-    showInputError(inputFieldName, inputFieldName.validationMessage);
+    showInputError(formProfileEditing, inputFieldName, inputFieldName.validationMessage);
     formError.classList.add('form__input-error_active');
   } else {
-    hideInputError(inputFieldName);
+    hideInputError(formProfileEditing, inputFieldName);
     formError.classList.remove('form__input-error_active');
   }
 };
 
-inputFieldName.addEventListener('input', isValid);
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__edit'));
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      isValid(formElement, inputElement)
+    });
+  });
+};
+
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+};
+
+enableValidation();
