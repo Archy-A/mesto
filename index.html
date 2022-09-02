@@ -44,17 +44,12 @@
         <button type="button" class="popup__btn-close" aria-label="Крестик, закрыть окно рекдактирования"></button>
         <form method="post" name="popupEditForm" class="popup__form popup__edit-form" novalidate>
           <h2 class="popup__header">Редактировать профиль</h2>
-
           <input id="edit_name-input" type="text" name="profileName" placeholder="Имя"
             class="popup__edit popup__edit_name_copy" minlength="2" maxlength="40" required>
-
           <span class="form__input-error edit_name-input-error">error</span>
-
           <input id="edit_activity-input" type="text" name="profileActivity" placeholder="Род деятельности"
              class="popup__edit popup__edit_activity_title" minlength="2" maxlength="200"  required>
-
           <span class="form__input-error edit_activity-input-error"></span>
-
           <button type="submit" class="popup__save"
             aria-label="Сохранить изменения после редактирования профиля">Сохранить</button>
         </form>
@@ -66,17 +61,12 @@
         <button type="button" class="popup__btn-close" aria-label="Крестик, закрыть окно рекдактирования"></button>
         <form method="post" name="popupAddForm" class="popup__form popup__add-form" novalidate>
           <h2 class="popup__header">Новое место</h2>
-
           <input id="edit_name-input" type="text" name="cardPlace" placeholder="Название"
             class="popup__edit popup__edit_card-name" minlength="2" maxlength="30" required>
-
           <span class="form__input-error edit_name-input-error"></span>
-
           <input id="edit_card-link" type="text" name="cardActivity" placeholder="Сcылка на страницу"
             class="popup__edit popup__edit_card-link" type="url" id="url" pattern="http*://.*" required>
-
           <span class="form__input-error edit_card-link-error"></span>
-
           <button type="submit" class="popup__save" aria-label="Добавить новое место">Создать</button>
         </form>
       </div>

@@ -13,13 +13,11 @@ const showInputError = (popup, element, errorMessage, config) => {
   if (element.validity.patternMismatch) {
     errorElement.textContent = "Введите адрес сайта.";
   }
-  // errorElement.classList.add(config.inputErrorClass);
 };
 
 const hideInputError = (popup, element, config) => {
   const errorElement = popup.querySelector(`.${element.id}-error`);
   element.classList.remove(config.errorRedLineClass);
-  // errorElement.classList.remove(config.inputErrorClass);
   errorElement.textContent = '';
 };
 
@@ -77,7 +75,6 @@ const validationConfig = {
   inputSelector: '.popup__edit',
   submitButtonSelector: '.popup__save',
   inactiveButtonClass: 'popup__save-inactive',
-  inputErrorClass: 'form__input-error_active',
   errorClass: 'popup__error_visible',
   errorRedLineClass: 'popup__edit-error'
 }

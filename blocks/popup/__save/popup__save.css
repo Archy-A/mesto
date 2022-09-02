@@ -14,7 +14,7 @@
   color: white;
   min-width: 358px;
   min-height: 50px;
-  margin-top: 48px;
+  margin-top: 36px;
 }
 
 .popup__save:hover {
@@ -27,7 +27,7 @@
     line-height: 17px;
     width: 238px;
     min-height: 46px;
-    margin-top: 45px;
+    margin-top: 33px;
     min-width: 238px;
     }
   }
