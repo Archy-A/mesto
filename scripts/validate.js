@@ -1,12 +1,7 @@
 // validation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-Popup.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-});
-
-const formError = Popup.querySelector(`.${inputFieldName.id}-error`);
-const showInputError = (Popup, element, errorMessage, config) => {
-  const errorElement = Popup.querySelector(`.${element.id}-error`);
+const showInputError = (popup, element, errorMessage, config) => {
+  const errorElement = popup.querySelector(`.${element.id}-error`);
   element.classList.add(config.errorRedLineClass);
   errorElement.textContent = errorMessage;
   if (element.validity.valueMissing) {
@@ -21,20 +16,18 @@ const showInputError = (Popup, element, errorMessage, config) => {
   errorElement.classList.add(config.inputErrorClass);
 };
 
-const hideInputError = (Popup, element, config) => {
-  const errorElement = Popup.querySelector(`.${element.id}-error`);
+const hideInputError = (popup, element, config) => {
+  const errorElement = popup.querySelector(`.${element.id}-error`);
   element.classList.remove(config.errorRedLineClass);
   errorElement.classList.remove(config.inputErrorClass);
   errorElement.textContent = '';
 };
 
-const isValid = (Popup, inputFieldName, config) => {
-  if (!inputFieldName.validity.valid) {
-    showInputError(Popup, inputFieldName, inputFieldName.validationMessage, config);
-    formError.classList.add(config.inputErrorClass);
+const checkForValidity = (popup, editField, config) => {
+  if (!editField.validity.valid) {
+    showInputError(popup, editField, editField.validationMessage, config);
   } else {
-    hideInputError(Popup, inputFieldName, config);
-    formError.classList.remove(config.inputErrorClass);
+    hideInputError(popup, editField, config);
   }
 };
 
@@ -56,7 +49,7 @@ const toggleButtonState = (inputList, buttonElement, config) => {
 
 const validateInput = (form, input, inputList, config) => {
   const buttonElement = form.querySelector(config.submitButtonSelector);
-  isValid(form, input, config);
+  checkForValidity(form, input, config);
   toggleButtonState(inputList, buttonElement, config);
 }
 

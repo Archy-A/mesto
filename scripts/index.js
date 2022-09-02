@@ -1,5 +1,3 @@
-const Popup = document.querySelector('.popup');
-
 const profilePopup = document.querySelector('.popup-edit');
 const cardPopup = document.querySelector('.popup-add');
 const imagePopup = document.querySelector('.popup-photo');
@@ -99,22 +97,32 @@ const saveCardHandler = function (evt) {
 }
 
 // OnClick processors for profilePopup, cardPopup, imagePopup: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-function openPropfilePopup() {
+function openProfilePopup() {
   inputFieldName.value = profileInfoName.textContent;
   inputFieldActivity.value = profileInfoActivity.textContent;
-  isValid(profilePopup, editField, validationConfig);
-  const inputList = Array.from(profilePopup.querySelectorAll('.popup__edit'));
-  const buttonElement = profilePopup.querySelector('.popup__save');
-  toggleButtonState(inputList, buttonElement, validationConfig);
+  initPopup(profilePopup, false);
   openPopup(profilePopup);
 }
 
 function openAddCardPopup() {
   cardName.value = '';
   cardLink.value = '';
+  initPopup(cardPopup, true);
   openPopup(cardPopup);
-  const inputList = Array.from(cardPopup.querySelectorAll('.popup__edit'));
-  const buttonElement = cardPopup.querySelector('.popup__save');
+}
+
+function initPopup(popup, isCreating)
+{
+  const editFieldList = popup.querySelectorAll('.popup__edit');
+  editFieldList.forEach((editField) => {
+    if (isCreating) {
+      hideInputError(popup, editField, validationConfig);
+    } else {
+      checkForValidity(popup, editField, validationConfig);
+    }
+  });
+  const inputList = Array.from(popup.querySelectorAll('.popup__edit'));
+  const buttonElement = popup.querySelector('.popup__save');
   toggleButtonState(inputList, buttonElement, validationConfig);
 }
 
@@ -146,7 +154,7 @@ const closeButtonList = document.querySelectorAll('.popup__btn-close');
    closeButtonList.addEventListener('click', onClosePopupRequest));
 
 buttonCard.addEventListener('click', openAddCardPopup);
-buttonProfile.addEventListener('click', openPropfilePopup);
+buttonProfile.addEventListener('click', openProfilePopup);
 
 formCardInserting.addEventListener('submit', saveCardHandler);
 formProfileEditing.addEventListener('submit', saveProfileHandler);
