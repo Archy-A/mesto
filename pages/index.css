@@ -43,4 +43,4 @@
 @import url(../blocks/popup-photo/__name/popup-photo__name.css);
 @import url(../blocks/popup/__edit-error/popup__edit-error.css);
 @import url(../blocks/popup/__save/__save-inactive/popup__save-inactive.css);
-@import url(../blocks/form/__input-error/form__input-error.css);
+@import url(../blocks/popup/__input-error/popup__input-error.css);
