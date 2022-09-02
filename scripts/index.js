@@ -149,7 +149,6 @@ function onClosePopupRequest(evt) {
 
 function closePopup(popup) {
   popup.classList.remove('popup-opened');
-
 }
 
 // event listeners: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -170,9 +169,16 @@ const popupList = document.querySelectorAll('.popup');
 [...popupList].forEach((popup) =>
   popup.addEventListener('click', () => {
   closePopup(popup);
-
-  // document.body.addEventListener("keydown", escapeClose);
 }));
+
+const root = document.querySelector('.root');
+const closePopupEsc = function (evt) {
+  if (evt.keyCode === 27) {
+    [...popupList].forEach((popupEsc) =>
+    closePopup(popupEsc));
+  }
+};
+root.addEventListener("keydown", closePopupEsc);
 
 buttonCard.addEventListener('click', openAddCardPopup);
 buttonProfile.addEventListener('click', openProfilePopup);
@@ -184,3 +190,6 @@ initialCards.forEach(function (element) {
   const elementCard = createCard(element);
   elementList.append(elementCard);
 });
+
+
+

@@ -4,13 +4,9 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
-  /* display: flex; */
   visibility: visible;
-  /* opacity: 0; */
-  color: #FF0000;
-  /* position: absolute; */
+  color: #ff0000;
   top: 143px;
-
-  /* margin-right: 36px; */
   padding-right: 36px;
+  height: 12px;
 }
