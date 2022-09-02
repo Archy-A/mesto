@@ -18,6 +18,9 @@ const formCardInserting = document.querySelector('.popup__add-form');
 const formProfileEditing = document.querySelector('.popup__edit-form');
 const editField = profilePopup.querySelector('.popup__edit');
 
+const popupForm = profilePopup.querySelector('.popup__form');
+// const popupMain = profilePopup.querySelector('.popup');
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -146,6 +149,7 @@ function onClosePopupRequest(evt) {
 
 function closePopup(popup) {
   popup.classList.remove('popup-opened');
+
 }
 
 // event listeners: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -153,9 +157,25 @@ const closeButtonList = document.querySelectorAll('.popup__btn-close');
 [...closeButtonList].forEach((closeButtonList) =>
    closeButtonList.addEventListener('click', onClosePopupRequest));
 
+const popupFormList = document.querySelectorAll('.popup__form');
+[...popupFormList].forEach((popupForm) =>
+ popupForm.addEventListener('click', (e) => {
+ e.stopPropagation();
+ }));
+ popupPhotoImg.addEventListener('click', (e) => {
+  e.stopPropagation();
+ });
+
+const popupList = document.querySelectorAll('.popup');
+[...popupList].forEach((popup) =>
+  popup.addEventListener('click', () => {
+  closePopup(popup);
+
+  // document.body.addEventListener("keydown", escapeClose);
+}));
+
 buttonCard.addEventListener('click', openAddCardPopup);
 buttonProfile.addEventListener('click', openProfilePopup);
-
 formCardInserting.addEventListener('submit', saveCardHandler);
 formProfileEditing.addEventListener('submit', saveProfileHandler);
 
