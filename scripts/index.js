@@ -16,6 +16,7 @@ const popupPhotoName = imagePopup.querySelector('.popup-photo__name');
 const popupPhotoImg = imagePopup.querySelector('.popup-photo__fullview');
 const formCardInserting = document.querySelector('.popup__add-form');
 const formProfileEditing = document.querySelector('.popup__edit-form');
+const editField = profilePopup.querySelector('.popup__edit');
 
 const initialCards = [
   {
@@ -99,6 +100,10 @@ const saveCardHandler = function (evt) {
 function openPropfilePopup() {
   inputFieldName.value = profileInfoName.textContent;
   inputFieldActivity.value = profileInfoActivity.textContent;
+  isValid(profilePopup, editField, validationConfig);
+  const inputList = Array.from(profilePopup.querySelectorAll('.popup__edit'));
+  const buttonElement = profilePopup.querySelector('.popup__save');
+  toggleButtonState(inputList, buttonElement, validationConfig);
   openPopup(profilePopup);
 }
 
@@ -146,88 +151,3 @@ initialCards.forEach(function (element) {
   const elementCard = createCard(element);
   elementList.append(elementCard);
 });
-
-
-// validation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-formProfileEditing.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-});
-
-const formError = formProfileEditing.querySelector(`.${inputFieldName.id}-error`);
-
-const showInputError = (formProfileEditing, element, errorMessage) => {
-  const errorElement = formProfileEditing.querySelector(`.${element.id}-error`);
-  element.classList.add('popup__edit-error');
-  errorElement.textContent = errorMessage;
-
-  if (element.validity.valueMissing) {
-    errorElement.textContent = "Вы пропустили это поле.";
-  }
-
-  if (element.validity.tooShort) {
-    errorElement.textContent = "Введите не менее 2-х символов.";
-  }
-  errorElement.classList.add('form__input-error_active');
-};
-
-const hideInputError = (formProfileEditing, element) => {
-  const errorElement = formProfileEditing.querySelector(`.${element.id}-error`);
-  element.classList.remove('popup__edit-error');
-  errorElement.classList.remove('form__input-error_active');
-  errorElement.textContent = '';
-};
-
-const isValid = (formProfileEditing, inputFieldName) => {
-  if (!inputFieldName.validity.valid) {
-    showInputError(formProfileEditing, inputFieldName, inputFieldName.validationMessage);
-    formError.classList.add('form__input-error_active');
-  } else {
-    hideInputError(formProfileEditing, inputFieldName);
-    formError.classList.remove('form__input-error_active');
-  }
-};
-
-const hasInvalidInput = (inputList) => {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  })
-};
-
-const toggleButtonState = (inputList, buttonElement) => {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('popup__save-inactive');
-    buttonElement.setAttribute("disabled", "");
-  } else {
-    buttonElement.classList.remove('popup__save-inactive');
-    buttonElement.removeAttribute("disabled");
-  }
-};
-
-
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__edit'));
-  const buttonElement = formElement.querySelector('.popup__save');
-
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener('input', () => {
-      isValid(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
-    });
-  });
-};
-
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup__form'));
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
-    setEventListeners(formElement);
-  });
-};
-
-enableValidation();
-
-
