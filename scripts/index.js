@@ -98,7 +98,7 @@ const saveCardHandler = function (evt) {
   onClosePopupRequest(evt);
 }
 
-// OnClick processors for profilePopup, cardPopup, imagePopup: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// OnClick processors for profilePopup, cardPopup, imagePopup: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function openPropfilePopup() {
   inputFieldName.value = profileInfoName.textContent;
   inputFieldActivity.value = profileInfoActivity.textContent;
