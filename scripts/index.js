@@ -17,9 +17,8 @@ const popupPhotoImg = imagePopup.querySelector('.popup-photo__fullview');
 const formCardInserting = document.querySelector('.popup__add-form');
 const formProfileEditing = document.querySelector('.popup__edit-form');
 const editField = profilePopup.querySelector('.popup__edit');
-
 const popupForm = profilePopup.querySelector('.popup__form');
-// const popupMain = profilePopup.querySelector('.popup');
+
 
 const initialCards = [
   {
