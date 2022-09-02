@@ -66,9 +66,17 @@
         <button type="button" class="popup__btn-close" aria-label="Крестик, закрыть окно рекдактирования"></button>
         <form method="post" name="popupAddForm" class="popup__form popup__add-form" novalidate>
           <h2 class="popup__header">Новое место</h2>
-          <input type="text" name="cardPlace" placeholder="Название" class="popup__edit popup__edit_card-name">
-          <input type="text" name="cardActivity" placeholder="ССылка на страницу"
-            class="popup__edit popup__edit_card-link">
+
+          <input id="edit_name-input" type="text" name="cardPlace" placeholder="Название" class="popup__edit popup__edit_card-name"
+          minlength="2" maxlength="30" required>
+
+          <span class="form__input-error edit_name-input-error"></span>
+
+          <input id="edit_card-link" type="text" name="cardActivity" placeholder="Сcылка на страницу"
+            class="popup__edit popup__edit_card-link" type="url" id="url" pattern="https://.*" required>
+
+          <span class="form__input-error edit_card-link-error"></span>
+
           <button type="submit" class="popup__save" aria-label="Добавить новое место">Создать</button>
         </form>
       </div>

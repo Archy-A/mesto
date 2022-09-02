@@ -1,12 +1,12 @@
 // validation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-formProfileEditing.addEventListener('submit', function (evt) {
+Popup.addEventListener('submit', function (evt) {
   evt.preventDefault();
 });
 
-const formError = formProfileEditing.querySelector(`.${inputFieldName.id}-error`);
-const showInputError = (formProfileEditing, element, errorMessage, config) => {
-  const errorElement = formProfileEditing.querySelector(`.${element.id}-error`);
+const formError = Popup.querySelector(`.${inputFieldName.id}-error`);
+const showInputError = (Popup, element, errorMessage, config) => {
+  const errorElement = Popup.querySelector(`.${element.id}-error`);
   element.classList.add(config.errorRedLineClass);
   errorElement.textContent = errorMessage;
   if (element.validity.valueMissing) {
@@ -15,22 +15,25 @@ const showInputError = (formProfileEditing, element, errorMessage, config) => {
   if (element.validity.tooShort) {
     errorElement.textContent = "Введите не менее 2-х символов.";
   }
+  if (element.validity.patternMismatch) {
+    errorElement.textContent = "Введите адрес сайта.";
+  }
   errorElement.classList.add(config.inputErrorClass);
 };
 
-const hideInputError = (formProfileEditing, element, config) => {
-  const errorElement = formProfileEditing.querySelector(`.${element.id}-error`);
+const hideInputError = (Popup, element, config) => {
+  const errorElement = Popup.querySelector(`.${element.id}-error`);
   element.classList.remove(config.errorRedLineClass);
   errorElement.classList.remove(config.inputErrorClass);
   errorElement.textContent = '';
 };
 
-const isValid = (formProfileEditing, inputFieldName, config) => {
+const isValid = (Popup, inputFieldName, config) => {
   if (!inputFieldName.validity.valid) {
-    showInputError(formProfileEditing, inputFieldName, inputFieldName.validationMessage, config);
+    showInputError(Popup, inputFieldName, inputFieldName.validationMessage, config);
     formError.classList.add(config.inputErrorClass);
   } else {
-    hideInputError(formProfileEditing, inputFieldName, config);
+    hideInputError(Popup, inputFieldName, config);
     formError.classList.remove(config.inputErrorClass);
   }
 };

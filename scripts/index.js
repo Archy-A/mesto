@@ -1,3 +1,5 @@
+const Popup = document.querySelector('.popup');
+
 const profilePopup = document.querySelector('.popup-edit');
 const cardPopup = document.querySelector('.popup-add');
 const imagePopup = document.querySelector('.popup-photo');
@@ -111,6 +113,9 @@ function openAddCardPopup() {
   cardName.value = '';
   cardLink.value = '';
   openPopup(cardPopup);
+  const inputList = Array.from(cardPopup.querySelectorAll('.popup__edit'));
+  const buttonElement = cardPopup.querySelector('.popup__save');
+  toggleButtonState(inputList, buttonElement, validationConfig);
 }
 
 function openImagePopup(imageElement) {
