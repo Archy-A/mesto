@@ -163,7 +163,6 @@ function closeByEscape(evt) {
 const popups = document.querySelectorAll('.popup')
   popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
-      console.log('evt.target=', evt.target);
       if (evt.target.classList.contains('popup-opened')
        || evt.target.classList.contains('popup-photo__container')
        || evt.target.classList.contains('popup__container'))
