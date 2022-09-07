@@ -160,9 +160,21 @@ function closeByEscape(evt) {
 }
 
 // event listeners: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-const closeButtonList = document.querySelectorAll('.popup__btn-close');
-[...closeButtonList].forEach((closeButtonList) =>
-   closeButtonList.addEventListener('click', onClosePopupRequest));
+const popups = document.querySelectorAll('.popup')
+  popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+      console.log('evt.target=', evt.target);
+      if (evt.target.classList.contains('popup-opened')
+       || evt.target.classList.contains('popup-photo__container')
+       || evt.target.classList.contains('popup__container'))
+        {
+            closePopup(popup);
+        }
+      if (evt.target.classList.contains('popup__btn-close')) {
+            closePopup(popup);
+        }
+    })
+  })
 
 const popupFormList = document.querySelectorAll('.popup__form');
 [...popupFormList].forEach((popupForm) =>
@@ -172,12 +184,6 @@ const popupFormList = document.querySelectorAll('.popup__form');
  popupPhotoImg.addEventListener('click', (e) => {
   e.stopPropagation();
  });
-
-const popupList = document.querySelectorAll('.popup');
-[...popupList].forEach((popup) =>
-  popup.addEventListener('click', () => {
-  closePopup(popup);
-}));
 
 const root = document.querySelector('.root');
 root.addEventListener("keydown", closeByEscape);
