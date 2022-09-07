@@ -7,6 +7,7 @@
   min-height: 282px;
   box-sizing: border-box;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .element__picture:hover {

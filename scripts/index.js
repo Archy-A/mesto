@@ -138,6 +138,7 @@ function openImagePopup(imageElement) {
 // popup open function for all elements: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function openPopup(popup) {
   popup.classList.add('popup-opened');
+  document.addEventListener('keydown', closeByEscape);
 }
 
 // popup close function for all elements: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -148,6 +149,14 @@ function onClosePopupRequest(evt) {
 
 function closePopup(popup) {
   popup.classList.remove('popup-opened');
+  document.removeEventListener('keydown', closeByEscape);
+}
+
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup-opened');
+    closePopup(openedPopup);
+  }
 }
 
 // event listeners: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -171,14 +180,7 @@ const popupList = document.querySelectorAll('.popup');
 }));
 
 const root = document.querySelector('.root');
-const closePopupEsc = function (evt) {
-  if (evt.keyCode === 27) {
-    [...popupList].forEach((popupEsc) =>
-    closePopup(popupEsc));
-  }
-};
-root.addEventListener("keydown", closePopupEsc);
-
+root.addEventListener("keydown", closeByEscape);
 buttonCard.addEventListener('click', openAddCardPopup);
 buttonProfile.addEventListener('click', openProfilePopup);
 formCardInserting.addEventListener('submit', saveCardHandler);
@@ -189,6 +191,3 @@ initialCards.forEach(function (element) {
   const elementCard = createCard(element);
   elementList.append(elementCard);
 });
-
-
-
