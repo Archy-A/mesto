@@ -1,8 +1,6 @@
 class FormValidator {
-
   #formElement;
   #config;
-
   constructor(formElement, config) {
     this.#formElement = formElement;
     this.#config = config;
@@ -73,12 +71,11 @@ class FormValidator {
   };
 
   enableValidation = (isCreating=true) => {
-      this.formElement.addEventListener('submit', (evt) => {
+      this.#formElement.addEventListener('submit', (evt) => {
         evt.preventDefault();
       });
       this.#setEventListeners(isCreating);
   };
-
 }
 
 export { FormValidator as FormValidator };
