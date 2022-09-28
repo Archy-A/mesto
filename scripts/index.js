@@ -162,7 +162,6 @@ const runValidation = (config) => {
     });
 }
 
-
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__edit',

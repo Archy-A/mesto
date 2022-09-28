@@ -1,12 +1,16 @@
 class FormValidator {
+
+  #formElement;
+  #config;
+
   constructor(formElement, config) {
-    this.formElement = formElement;
-    this.config = config;
+    this.#formElement = formElement;
+    this.#config = config;
   }
 
   #showInputError = (element, errorMessage) => {
-    const errorElement = this.formElement.querySelector(`.${element.id}-error`);
-    element.classList.add(this.config.errorRedLineClass);
+    const errorElement = this.#formElement.querySelector(`.${element.id}-error`);
+    element.classList.add(this.#config.errorRedLineClass);
     errorElement.textContent = errorMessage;
     if (element.validity.valueMissing) {
       errorElement.textContent = "Вы пропустили это поле.";
@@ -20,8 +24,8 @@ class FormValidator {
   };
 
   #hideInputError = (element) => {
-    const errorElement = this.formElement.querySelector(`.${element.id}-error`);
-    element.classList.remove(this.config.errorRedLineClass);
+    const errorElement = this.#formElement.querySelector(`.${element.id}-error`);
+    element.classList.remove(this.#config.errorRedLineClass);
     errorElement.textContent = '';
   };
 
@@ -41,22 +45,22 @@ class FormValidator {
 
   #toggleButtonState = (inputList, buttonElement) => {
     if (this.#hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this.config.inactiveButtonClass);
+      buttonElement.classList.add(this.#config.inactiveButtonClass);
       buttonElement.setAttribute("disabled", "");
     } else {
-      buttonElement.classList.remove(this.config.inactiveButtonClass);
+      buttonElement.classList.remove(this.#config.inactiveButtonClass);
       buttonElement.removeAttribute("disabled");
     }
   };
 
   #validateInput = (input, inputList) => {
-    const buttonElement = this.formElement.querySelector(this.config.submitButtonSelector);
+    const buttonElement = this.#formElement.querySelector(this.#config.submitButtonSelector);
     this.#checkForValidity(input);
     this.#toggleButtonState(inputList, buttonElement);
   }
 
   #setEventListeners = (isCreating) => {
-    const inputList = Array.from(this.formElement.querySelectorAll(this.config.inputSelector));
+    const inputList = Array.from(this.#formElement.querySelectorAll(this.#config.inputSelector));
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this.#validateInput(inputElement, inputList);
@@ -78,16 +82,3 @@ class FormValidator {
 }
 
 export { FormValidator as FormValidator };
-
-
-
-//
-//
-//
-//
-//
-//
-//
-// validation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
