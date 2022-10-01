@@ -1,4 +1,4 @@
-import { Card } from './card.js'
+import { Card } from './Card.js'
 import { FormValidator } from './FormValidator.js'
 
 const profilePopup = document.querySelector('.popup-edit');
@@ -22,6 +22,14 @@ const formProfileEditing = document.querySelector('.popup__edit-form');
 const editField = profilePopup.querySelector('.popup__edit');
 const popupForm = profilePopup.querySelector('.popup__form');
 
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__edit',
+  submitButtonSelector: '.popup__save',
+  inactiveButtonClass: 'popup__save-inactive',
+  errorClass: 'popup__error_visible',
+  errorRedLineClass: 'popup__edit-error'
+}
 
 const initialCards = [
   {
@@ -50,12 +58,27 @@ const initialCards = [
   }
 ];
 
+// create card's class instance for EDIT-PORFILE and CARD-ADD popups
+const profileformValidator = new FormValidator (profilePopup, validationConfig);
+profileformValidator.enableValidation();
+
+const AddCardformValidator = new FormValidator (addCardPopup, validationConfig);
+AddCardformValidator.enableValidation();
+
 // save(add) profile information >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const saveProfileHandler = function (evt) {
   evt.preventDefault();
   profileInfoName.textContent = inputFieldName.value;
   profileInfoActivity.textContent = inputFieldActivity.value;
+
+  // внутри этой функции как раз и вызывается универсальная функция закрытия popup'a: closePopup(popup)
   onClosePopupRequest(evt);
+}
+
+// card create >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+const cardInstanceCreate = function (element) {
+  const elementCard = new Card (element.name, element.link, elementTemplate, openPopup);
+  return elementCard.cardCreate();
 }
 
 // save(add) new card >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -65,35 +88,31 @@ const saveCardHandler = function (evt) {
     name: cardName.value,
     link: cardLink.value
     };
-  const elementCard = new Card (element.name, element.link, elementTemplate, openPopup);
-  elementList.prepend(elementCard.cardCreate());
+  const card = cardInstanceCreate(element);
+  elementList.prepend(card);
+
+  // внутри этой функции как раз и вызывается универсальная функция закрытия popup'a: closePopup(popup)
   onClosePopupRequest(evt);
 }
 
-// OnClick processors for profilePopup, cardPopup, imagePopup: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function openProfilePopup() {
   inputFieldName.value = profileInfoName.textContent;
   inputFieldActivity.value = profileInfoActivity.textContent;
-  initPopup(profilePopup, false);
+  profileformValidator.resetError();
+  AddCardformValidator.resetError();
   openPopup(profilePopup);
 }
 
 function openAddCardPopup() {
-  cardName.value = '';
-  cardLink.value = '';
-  initPopup(addCardPopup, true);
+  formCardInserting.reset();
+  profileformValidator.resetError();
+  AddCardformValidator.resetError();
   openPopup(addCardPopup);
-}
-
-function initPopup(popup, isCreating)
-{
-  const formValidator = new FormValidator (popup, validationConfig);
-  formValidator.enableValidation(isCreating);
 }
 
 // popup open function for all elements: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function openPopup(popup) {
-  popup.classList.add('popup-opened');
+  popup.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
 }
 
@@ -104,13 +123,13 @@ function onClosePopupRequest(evt) {
 }
 
 function closePopup(popup) {
-  popup.classList.remove('popup-opened');
+  popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeByEscape);
 }
 
 function closeByEscape(evt) {
   if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup-opened');
+    const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
   }
 }
@@ -119,9 +138,12 @@ function closeByEscape(evt) {
 const popups = document.querySelectorAll('.popup')
   popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup-opened')
+      if (evt.target.classList.contains('popup')
+      // если эти два условия убрать не будет работать закрытие окна при клике
+      // на область черного фона на котором находится "крестик" (кнопка закрыть)
        || evt.target.classList.contains('popup-photo__container')
-       || evt.target.classList.contains('popup__container'))
+       || evt.target.classList.contains('popup__container')
+         )
         {
             closePopup(popup);
         }
@@ -130,15 +152,6 @@ const popups = document.querySelectorAll('.popup')
         }
     })
   })
-
-const popupFormList = document.querySelectorAll('.popup__form');
-[...popupFormList].forEach((popupForm) =>
- popupForm.addEventListener('click', (e) => {
- e.stopPropagation();
- }));
- popupPhotoImg.addEventListener('click', (e) => {
-  e.stopPropagation();
- });
 
 const root = document.querySelector('.root');
 root.addEventListener("keydown", closeByEscape);
@@ -149,26 +162,6 @@ formProfileEditing.addEventListener('submit', saveProfileHandler);
 
 // cards add from the array >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 initialCards.forEach(function (element) {
-  const elementCard = new Card (element.name, element.link, elementTemplate, openPopup);
-  elementList.append(elementCard.cardCreate());
+  const card = cardInstanceCreate(element);
+  elementList.append(card);
 });
-
-// form validation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-const runValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
-  formList.forEach((formElement) => {
-      const formValidator = new FormValidator (formElement, config);
-      formValidator.enableValidation();
-    });
-}
-
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__edit',
-  submitButtonSelector: '.popup__save',
-  inactiveButtonClass: 'popup__save-inactive',
-  errorClass: 'popup__error_visible',
-  errorRedLineClass: 'popup__edit-error'
-}
-
-runValidation(validationConfig);
