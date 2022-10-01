@@ -3,7 +3,6 @@ import { FormValidator } from './FormValidator.js'
 
 const profilePopup = document.querySelector('.popup-edit');
 const addCardPopup = document.querySelector('.popup-add');
-const imagePopup = document.querySelector('.popup-photo');
 
 const profileInfoName = document.querySelector('.profile__name');
 const profileInfoActivity = document.querySelector('.profile__activity');
@@ -15,12 +14,8 @@ const elementTemplate = document.querySelector('.element-template').content;
 const elementList = document.querySelector('.elements');
 const cardName = addCardPopup.querySelector('.popup__edit_card-name');
 const cardLink = addCardPopup.querySelector('.popup__edit_cardlink');
-const popupPhotoName = imagePopup.querySelector('.popup-photo__name');
-const popupPhotoImg = imagePopup.querySelector('.popup-photo__fullview');
 const formCardInserting = document.querySelector('.popup__add-form');
 const formProfileEditing = document.querySelector('.popup__edit-form');
-const editField = profilePopup.querySelector('.popup__edit');
-const popupForm = profilePopup.querySelector('.popup__form');
 
 const validationConfig = {
   formSelector: '.popup__form',
