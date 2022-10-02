@@ -133,7 +133,6 @@ const popups = document.querySelectorAll('.popup')
     })
   })
 
-const root = document.querySelector('.root');
 buttonCard.addEventListener('click', openAddCardPopup);
 buttonProfile.addEventListener('click', openProfilePopup);
 formCardInserting.addEventListener('submit', saveCardHandler);
