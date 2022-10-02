@@ -13,12 +13,12 @@ class Card {
   #popupPhotoImg;
   #cardImage;
 
-  constructor(name, link, elementTemplate, openPopup) {
+  constructor(name, link, openPopup) {
     this.#name = name;
     this.#link = link;
-    this.#elementTemplate = elementTemplate;
+    this.#elementTemplate = document.querySelector('.element-template').content;
     this.#openPopup = openPopup;
-    this.#elementCardTemplate = elementTemplate.cloneNode(true);
+    this.#elementCardTemplate = this.#elementTemplate.cloneNode(true);
     this.#elementCard = this.#elementCardTemplate.querySelector('.element');
     this.#likeButton = this.#elementCard.querySelector('.element__like');
     this.#deleteButton = this.#elementCard.querySelector('.element__bin');

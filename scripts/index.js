@@ -10,7 +10,6 @@ const inputFieldActivity = profilePopup.querySelector('.popup__edit_activity_tit
 const inputFieldName = profilePopup.querySelector('.popup__edit_name_copy');
 const buttonProfile = document.querySelector('.profile__edit-button');
 const buttonCard = document.querySelector('.profile__add-button');
-const elementTemplate = document.querySelector('.element-template').content;
 const elementList = document.querySelector('.elements');
 const cardName = addCardPopup.querySelector('.popup__edit_card-name');
 const cardLink = addCardPopup.querySelector('.popup__edit_cardlink');
@@ -57,22 +56,21 @@ const initialCards = [
 const profileformValidator = new FormValidator (profilePopup, validationConfig);
 profileformValidator.enableValidation();
 
-const AddCardformValidator = new FormValidator (addCardPopup, validationConfig);
-AddCardformValidator.enableValidation();
+const addCardformValidator = new FormValidator (addCardPopup, validationConfig);
+addCardformValidator.enableValidation();
 
 // save(add) profile information >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const saveProfileHandler = function (evt) {
   evt.preventDefault();
   profileInfoName.textContent = inputFieldName.value;
   profileInfoActivity.textContent = inputFieldActivity.value;
-
-  // внутри этой функции как раз и вызывается универсальная функция закрытия popup'a: closePopup(popup)
-  onClosePopupRequest(evt);
+  const popup = evt.target.closest(".popup");
+  closePopup(popup);
 }
 
 // card create >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const cardInstanceCreate = function (element) {
-  const elementCard = new Card (element.name, element.link, elementTemplate, openPopup);
+  const elementCard = new Card (element.name, element.link, openPopup);
   return elementCard.cardCreate();
 }
 
@@ -85,23 +83,20 @@ const saveCardHandler = function (evt) {
     };
   const card = cardInstanceCreate(element);
   elementList.prepend(card);
-
-  // внутри этой функции как раз и вызывается универсальная функция закрытия popup'a: closePopup(popup)
-  onClosePopupRequest(evt);
+  const popup = evt.target.closest(".popup");
+  closePopup(popup);
 }
 
 function openProfilePopup() {
   inputFieldName.value = profileInfoName.textContent;
   inputFieldActivity.value = profileInfoActivity.textContent;
   profileformValidator.resetError();
-  AddCardformValidator.resetError();
   openPopup(profilePopup);
 }
 
 function openAddCardPopup() {
   formCardInserting.reset();
-  profileformValidator.resetError();
-  AddCardformValidator.resetError();
+  addCardformValidator.resetError();
   openPopup(addCardPopup);
 }
 
@@ -109,12 +104,6 @@ function openAddCardPopup() {
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
-}
-
-// popup close function for all elements: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-function onClosePopupRequest(evt) {
-  const popup = evt.target.closest(".popup");
-  closePopup(popup);
 }
 
 function closePopup(popup) {
@@ -133,23 +122,16 @@ function closeByEscape(evt) {
 const popups = document.querySelectorAll('.popup')
   popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
+      // вот что я имел ввиду - https://postimg.cc/xNrh0zTZ
       if (evt.target.classList.contains('popup')
-      // если эти два условия убрать не будет работать закрытие окна при клике
-      // на область черного фона на котором находится "крестик" (кнопка закрыть)
-       || evt.target.classList.contains('popup-photo__container')
-       || evt.target.classList.contains('popup__container')
-         )
+      || evt.target.classList.contains('popup__btn-close'))
         {
-            closePopup(popup);
-        }
-      if (evt.target.classList.contains('popup__btn-close')) {
-            closePopup(popup);
+          closePopup(popup);
         }
     })
   })
 
 const root = document.querySelector('.root');
-root.addEventListener("keydown", closeByEscape);
 buttonCard.addEventListener('click', openAddCardPopup);
 buttonProfile.addEventListener('click', openProfilePopup);
 formCardInserting.addEventListener('submit', saveCardHandler);
