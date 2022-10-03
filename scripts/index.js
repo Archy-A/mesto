@@ -64,13 +64,12 @@ const saveProfileHandler = function (evt) {
   evt.preventDefault();
   profileInfoName.textContent = inputFieldName.value;
   profileInfoActivity.textContent = inputFieldActivity.value;
-  const popup = evt.target.closest(".popup");
-  closePopup(popup);
+  closePopup(profilePopup);
 }
 
 // card create >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const cardInstanceCreate = function (element) {
-  const elementCard = new Card (element.name, element.link, openPopup);
+  const elementCard = new Card (element.name, element.link, '.element-template', openPopup);
   return elementCard.cardCreate();
 }
 
@@ -83,8 +82,7 @@ const saveCardHandler = function (evt) {
     };
   const card = cardInstanceCreate(element);
   elementList.prepend(card);
-  const popup = evt.target.closest(".popup");
-  closePopup(popup);
+  closePopup(addCardPopup);
 }
 
 function openProfilePopup() {

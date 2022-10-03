@@ -3,7 +3,6 @@ class Card {
 
   #name;
   #link;
-  #elementTemplate;
   #openPopup;
   #likeButton;
   #elementCardTemplate;
@@ -12,13 +11,14 @@ class Card {
   #popupPhotoName;
   #popupPhotoImg;
   #cardImage;
+  #cardSelector;
 
-  constructor(name, link, openPopup) {
+  constructor(name, link, cardSelector, openPopup) {
     this.#name = name;
     this.#link = link;
-    this.#elementTemplate = document.querySelector('.element-template').content;
     this.#openPopup = openPopup;
-    this.#elementCardTemplate = this.#elementTemplate.cloneNode(true);
+    this.#cardSelector = cardSelector;
+    this.#elementCardTemplate = document.querySelector(this.#cardSelector).content.cloneNode(true)
     this.#elementCard = this.#elementCardTemplate.querySelector('.element');
     this.#likeButton = this.#elementCard.querySelector('.element__like');
     this.#deleteButton = this.#elementCard.querySelector('.element__bin');
