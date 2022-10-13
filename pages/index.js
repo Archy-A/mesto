@@ -1,5 +1,5 @@
-import { Card } from './Card.js'
-import { FormValidator } from './FormValidator.js'
+import { Card } from '../components/Card.js'
+import { FormValidator } from '../components/FormValidator.js'
 
 const profilePopup = document.querySelector('.popup-edit');
 const addCardPopup = document.querySelector('.popup-add');
@@ -121,9 +121,9 @@ const popups = document.querySelectorAll('.popup')
   popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup')
-      || evt.target.classList.contains('popup__btn-close')
-      || evt.target.classList.contains('popup-photo__container')
-      || evt.target.classList.contains('popup__container'))
+       || evt.target.classList.contains('popup__btn-close')
+       || evt.target.classList.contains('popup-photo__container')
+       || evt.target.classList.contains('popup__container'))
         {
           closePopup(popup);
         }
