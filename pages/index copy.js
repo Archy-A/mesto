@@ -1,5 +1,4 @@
 import { Card } from '../components/Card.js'
-import { Section } from '../components/Section.js'
 import { FormValidator } from '../components/FormValidator.js'
 import { initialCards,
          validationConfig,
@@ -18,18 +17,29 @@ import { initialCards,
          formProfileEditing,
        } from '../utils/constants.js'
 
+
+
 //// SECTION TESTS ////////////////////////////////////////////////////////
 const defaultCardList = new Section({
   data: initialCards,
   renderer: (item) => {
-    const card = new Card (item, '.element-template', openPopup);
-    const cardElement = card.cardCreate();
-    defaultCardList.addItem(cardElement);
-  }
-}, elementList, 'manyCards');
+    const card = new DefaultCard(item, '.default-card');
+    const cardElement = card.generateCard();
+    defaultCardList.setItem(cardElement);
 
-defaultCardList.renderItems();
+    const card1 = new Card (item, '.element-template', openPopup);
+    const cardElement1 = card1.cardCreate();
+    defaultCardList.setItem(cardElement1);
+  }
+}, cardListSelector);
+
+
+const cardInstanceCreate = function (element) {
+  const elementCard = new Card (element.name, element.link, '.element-template', openPopup);
+  return elementCard.cardCreate();
+}
 ///////////////////////////////////////////////////////////////////////////
+
 
 
 // create card's class instance for EDIT-PORFILE and CARD-ADD popups
@@ -47,23 +57,21 @@ const saveProfileHandler = function (evt) {
   closePopup(profilePopup);
 }
 
+// // card create >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// const cardInstanceCreate = function (element) {
+//   const elementCard = new Card (element.name, element.link, '.element-template', openPopup);
+//   return elementCard.cardCreate();
+// }
+
 // save(add) new card >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const saveCardHandler = function (evt) {
   evt.preventDefault();
-  const element = [{
-    name: cardName.value, // .popup__edit_card-name
-    link: cardLink.value // .popup__edit_cardlink
-    }];
-
-  const oneCard = new Section({
-    data: element,
-    renderer: (item) => {
-      const card = new Card (item, '.element-template', openPopup);
-      const cardElement = card.cardCreate();
-      oneCard.addItem(cardElement);
-    }
-  }, elementList, 'oneCard');
-  oneCard.renderItems();
+  const element = {
+    name: cardName.value,
+    link: cardLink.value
+    };
+  const card = cardInstanceCreate(element);
+  elementList.prepend(card);
   closePopup(addCardPopup);
 }
 
@@ -116,3 +124,9 @@ buttonCard.addEventListener('click', openAddCardPopup);
 buttonProfile.addEventListener('click', openProfilePopup);
 formCardInserting.addEventListener('submit', saveCardHandler);
 formProfileEditing.addEventListener('submit', saveProfileHandler);
+
+// cards add from the array >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+initialCards.forEach(function (element) {
+  const card = cardInstanceCreate(element);
+  elementList.append(card);
+});
