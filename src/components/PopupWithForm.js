@@ -1,4 +1,4 @@
-import { Popup } from "../components/Popup.js";
+import { Popup } from "./Popup.js";
 
 class PopupWithForm extends Popup {
 
@@ -29,8 +29,6 @@ class PopupWithForm extends Popup {
     super.close();
     this.form.reset();
   }
-
 }
 
 export { PopupWithForm as PopupWithForm };
-
