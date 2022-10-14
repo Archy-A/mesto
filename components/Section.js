@@ -3,11 +3,11 @@ class Section {
     this._renderedItems = data;
     this._renderer = renderer;
     this._container = containerSelector;
-    this._howManyCards = howManyCards;
+    this.howManyCards = howManyCards;
   }
 
   addItem(element) {
-    if (this._howManyCards === 'manyCards') {
+    if (this.howManyCards === 'manyCards') {
     this._container.append(element);
     }
     else {
@@ -16,7 +16,6 @@ class Section {
   }
 
   renderItems() {
-
     this._renderedItems.forEach(item => {
       this._renderer(item);
     });
