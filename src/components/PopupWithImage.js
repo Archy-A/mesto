@@ -1,20 +1,19 @@
 import { Popup } from "../components/Popup.js";
-
+// вероятно здесь была ошибка в замечании:
+// "Импортов в класс не должно быть, только родительский класс для наследования"
+// мы здесь как раз и используем родительский класс Popup для наследования
 class PopupWithImage extends Popup {
 
-  static imagePopup = document.querySelector('.popup-photo');
-
-  constructor(element) {
-    super(PopupWithImage.imagePopup)
-    this.element = element;
-    this.popupPhotoName = PopupWithImage.imagePopup.querySelector('.popup-photo__name');
-    this.popupPhotoImg = PopupWithImage.imagePopup.querySelector('.popup-photo__fullview');
+  constructor(imagePopupSelector) {
+    super(imagePopupSelector)
+    this.popupPhotoName = this._popup.querySelector('.popup-photo__name');
+    this.popupPhotoImg = this._popup.querySelector('.popup-photo__fullview');
   }
 
-open() {
-    this.popupPhotoName.textContent = this.element.name;
-    this.popupPhotoImg.src = this.element.link;
-    this.popupPhotoImg.alt = this.element.name;
+open(element) {
+    this.popupPhotoName.textContent = element.name;
+    this.popupPhotoImg.src = element.link;
+    this.popupPhotoImg.alt = element.name;
     super.open();
   }
 }

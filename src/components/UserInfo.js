@@ -1,11 +1,13 @@
 class UserInfo {
   constructor(profileInfoName, profileInfoActivity) {
-    this.profileInfoName = profileInfoName;
-    this.profileInfoActivity = profileInfoActivity;
+    this.profileInfoName = document.querySelector(profileInfoName);
+    this.profileInfoActivity = document.querySelector(profileInfoActivity);
+    this.profileInfoName = document.querySelector('.profile__name');
+    this.profileInfoActivity = document.querySelector('.profile__activity');
   }
 
   getUserInfo() {
-    let UserData = {
+    const UserData = {
       name: this.profileInfoName.textContent,
       info: this.profileInfoActivity.textContent
     };
@@ -13,10 +15,8 @@ class UserInfo {
   }
 
   setUserInfo(nameAndInfo) {
-    const profileInfoName = document.querySelector('.profile__name');
-    const profileInfoActivity = document.querySelector('.profile__activity');
-    profileInfoName.textContent = nameAndInfo.profileName;
-    profileInfoActivity.textContent = nameAndInfo.profileActivity;
+    this.profileInfoName.textContent = nameAndInfo.profileName;
+    this.profileInfoActivity.textContent = nameAndInfo.profileActivity;
   }
 }
 

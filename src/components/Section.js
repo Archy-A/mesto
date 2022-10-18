@@ -1,18 +1,12 @@
 class Section {
-  constructor({ data, renderer }, containerSelector, howManyCards) {
+  constructor({ data, renderer }, containerSelector) {
     this._renderedItems = data;
     this._renderer = renderer;
-    this._container = containerSelector;
-    this.howManyCards = howManyCards;
+    this._container = document.querySelector(containerSelector);
   }
 
   addItem(element) {
-    if (this.howManyCards === 'manyCards') {
-    this._container.append(element);
-    }
-    else {
     this._container.prepend(element);
-    }
   }
 
   renderItems() {

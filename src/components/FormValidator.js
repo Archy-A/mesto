@@ -16,15 +16,6 @@ class FormValidator {
     const errorElement = this.#formElement.querySelector(`.${element.id}-error`);
     element.classList.add(this.#config.errorRedLineClass);
     errorElement.textContent = errorMessage;
-    if (element.validity.valueMissing) {
-      errorElement.textContent = "Вы пропустили это поле.";
-    }
-    if (element.validity.tooShort) {
-      errorElement.textContent = "Введите не менее 2-х символов.";
-    }
-    if (element.validity.patternMismatch) {
-      errorElement.textContent = "Введите адрес сайта.";
-    }
   };
 
   #hideInputError = (element) => {
@@ -67,7 +58,7 @@ class FormValidator {
       inputElement.addEventListener('input', () => {
         this.#validateInput(inputElement);
       });
-      this.#validateInput(inputElement);
+      this.#toggleButtonState()
     });
   };
 
@@ -79,9 +70,6 @@ class FormValidator {
     }
 
   enableValidation = () => {
-      this.#formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-      });
       this.#setEventListeners();
   };
 }

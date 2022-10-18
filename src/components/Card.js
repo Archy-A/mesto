@@ -20,15 +20,18 @@ class Card {
     this.#cardImage = this.#elementCard.querySelector('.element__picture');
   }
 
+  #like () {
+    this.#likeButton.classList.toggle('element__like_pressed')
+  }
+
   #likeHandler () {
-    this.#likeButton.addEventListener("click", () => {
-      this.#likeButton.classList.toggle('element__like_pressed')
-      });
+    this.#likeButton.addEventListener("click", this.#like);
   }
 
   #deleteHandler () {
     this.#deleteButton.addEventListener("click", () => {
         this.#elementCard.remove();
+        this.#elementCard = null;
       });
   }
 
