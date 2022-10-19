@@ -2,8 +2,6 @@ class UserInfo {
   constructor(profileInfoName, profileInfoActivity) {
     this.profileInfoName = document.querySelector(profileInfoName);
     this.profileInfoActivity = document.querySelector(profileInfoActivity);
-    this.profileInfoName = document.querySelector('.profile__name');
-    this.profileInfoActivity = document.querySelector('.profile__activity');
   }
 
   getUserInfo() {

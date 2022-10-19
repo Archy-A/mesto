@@ -9,7 +9,7 @@ import { FormValidator } from '../components/FormValidator.js'
 import { initialCards,
          validationConfig,
          profilePopup,
-         CardPopup,
+         cardPopup,
          inputFieldActivity,
          inputFieldName,
          buttonProfile,
@@ -21,13 +21,13 @@ import { initialCards,
          profileInfoActivitySelector
        } from '../utils/constants.js'
 
-const openPopupHandle = new PopupWithImage(imagePopupSelector);
-openPopupHandle.setEventListeners();
+const popupImage = new PopupWithImage(imagePopupSelector);
+popupImage.setEventListeners();
 
 // create card function
 const elementTemplatSelector = '.element-template';
 function createCard (item, elementTemplatSelector) {
-  const card = new Card (item, elementTemplatSelector, () => openPopupHandle.open(item));
+  const card = new Card (item, elementTemplatSelector, () => popupImage.open(item));
   const cardElement = card.cardCreate();
   return cardElement;
 }
@@ -49,25 +49,24 @@ defaultCardList.renderItems();
 const profileformValidator = new FormValidator (profilePopup, validationConfig);
 profileformValidator.enableValidation();
 
-const CardformValidator = new FormValidator (CardPopup, validationConfig);
-CardformValidator.enableValidation();
+const cardformValidator = new FormValidator (cardPopup, validationConfig);
+cardformValidator.enableValidation();
 
 // add new card instance
 const userInfo = new UserInfo(profileInfoNameSelector, profileInfoActivitySelector);
 const profilePopupSelector = '.popup-edit';
-const PopupProfileForm = new PopupWithForm(profilePopupSelector,
+const popupProfileForm = new PopupWithForm(profilePopupSelector,
   (item) => {
     userInfo.setUserInfo(item)
-    PopupProfileForm.close();
+    popupProfileForm.close();
   }
 );
-PopupProfileForm.setEventListeners();
+popupProfileForm.setEventListeners();
 
 // add new card instance
 const PopupCardForm = new PopupWithForm(CardPopupSelector,
     (item) => {
-      const card = new Card (item, '.element-template', () => openPopupHandle.open(item));
-      const cardElement = card.cardCreate();
+      const cardElement = createCard(item, elementTemplatSelector);
       defaultCardList.addItem(cardElement,);
       PopupCardForm.close();
     }
@@ -76,11 +75,11 @@ PopupCardForm.setEventListeners();
 
 buttonCard.addEventListener('click', () => {
   PopupCardForm.open();
-  CardformValidator.resetError();
+  cardformValidator.resetError();
 });
 
 buttonProfile.addEventListener('click', () => {
-  PopupProfileForm.open();
+  popupProfileForm.open();
   const userData = userInfo.getUserInfo();
   inputFieldName.value = userData.name;
   inputFieldActivity.value = userData.info;
