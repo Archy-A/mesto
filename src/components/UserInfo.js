@@ -16,7 +16,9 @@ class UserInfo {
   setUserInfo(nameAndInfo) {
     this.profileInfoName.textContent = nameAndInfo.name;
     this.profileInfoActivity.textContent = nameAndInfo.about;
-    this.profileAva.src = nameAndInfo.avatar;
+    if (nameAndInfo.avatar) {
+      this.profileAva.src = nameAndInfo.avatar;
+    }
   }
 }
 

@@ -9,6 +9,8 @@ import { UserInfo } from '../components/UserInfo.js'
 import { FormValidator } from '../components/FormValidator.js'
 import { //initialCards,
          validationConfig,
+         ServerInfoData,
+         token,
          profilePopup,
          cardPopup,
          inputFieldActivity,
@@ -34,26 +36,12 @@ function createCard (item, elementTemplatSelector) {
   return cardElement;
 }
 
-// prepare render function
-// function renderer (item) {
-//   const cardElement = createCard(item, elementTemplatSelector);
-//   this.addItem(cardElement);
-// }
-
-// render cards from array
-// const defaultCardList = new Section({
-//   data: initialCards,
-//   renderer: renderer
-// }, containerSelector);
-// defaultCardList.renderItems();
-
-
 // Api for cards
 const apiCards = new Api (
   {
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-52/cards',
+    baseUrl: 'cards',
     headers: {
-      authorization: '395bc3aa-f34f-406b-9552-e0d3786795c0',
+      authorization: token,
     }
   }
 )
@@ -80,7 +68,6 @@ const defaultCardList = new Section({
 defaultCardList.renderItems();
 
 
-
 // create card's class instance for EDIT-PROFILE and CARD-ADD popups
 const profileformValidator = new FormValidator (profilePopup, validationConfig);
 profileformValidator.enableValidation();
@@ -88,24 +75,13 @@ profileformValidator.enableValidation();
 const cardformValidator = new FormValidator (cardPopup, validationConfig);
 cardformValidator.enableValidation();
 
-// add new card instance
-const userInfo = new UserInfo(profileInfoNameSelector, profileInfoActivitySelector, profileInfoAvatar);
-const profilePopupSelector = '.popup-edit';
-const popupProfileForm = new PopupWithForm(profilePopupSelector,
-  (item) => {
-    userInfo.setUserInfo(item)
-    popupProfileForm.close();
-  }
-);
-popupProfileForm.setEventListeners();
-
 
 // Api for user
 const apiUser = new Api (
   {
-    baseUrl: 'https://nomoreparties.co/v1/cohort-52/users/me',
+    baseUrl: 'users/me',
     headers: {
-      authorization: '395bc3aa-f34f-406b-9552-e0d3786795c0',
+      authorization: token,
     }
   }
 )
@@ -117,20 +93,44 @@ function getUserInfoFromServer () {
     })
 }
 
+const userInfo = new UserInfo(profileInfoNameSelector, profileInfoActivitySelector, profileInfoAvatar);
+
+// await apiUser.setUserInfo();
 const userInforServer = await getUserInfoFromServer();
-userInfo.setUserInfo(userInforServer)
-console.log(userInforServer)
+userInfo.setUserInfo(userInforServer);
+// console.log(userInforServer);
+
+
+// user info
+const profilePopupSelector = '.popup-edit';
+const popupProfileForm = new PopupWithForm(profilePopupSelector,
+  (item) => {
+    userInfo.setUserInfo(item)
+    apiUser.setUserInfo(ServerInfoData.baseUrl,
+                        ServerInfoData.headers,
+                        userInfo.getUserInfo().name,
+                        userInfo.getUserInfo().info);
+    popupProfileForm.close();
+  }
+);
+popupProfileForm.setEventListeners();
 
 
 // add new card instance
 const popupCardForm = new PopupWithForm(cardPopupSelector,
     (item) => {
       const cardElement = createCard(item, elementTemplatSelector);
-      defaultCardList.addItem(cardElement,);
+      defaultCardList.addItem(cardElement);
+      apiCards.setCard(ServerInfoData.headers,
+                       item.name,
+                       item.link)
       popupCardForm.close();
     }
   );
 popupCardForm.setEventListeners();
+
+
+
 
 buttonCard.addEventListener('click', () => {
   popupCardForm.open();
@@ -144,5 +144,3 @@ buttonProfile.addEventListener('click', () => {
   inputFieldActivity.value = userData.info;
   profileformValidator.resetError();
 });
-
-

@@ -29,6 +29,17 @@ export const profileInfoNameSelector = '.profile__name';
 export const profileInfoActivitySelector = '.profile__activity';
 export const profileInfoAvatar = '.profile__avatar';
 
+export const token = '395bc3aa-f34f-406b-9552-e0d3786795c0';
+
+export const ServerInfoData =
+  {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-52/users/me',
+    headers: {
+      authorization: token,
+      'Content-Type': 'application/json'
+    },
+  }
+
 // export const initialCards = [
 //   {
 //     name: 'Архыз',
