@@ -18,7 +18,6 @@ class Card {
     this.#likeButton = this.#elementCard.querySelector('.element__like');
     this.#deleteButton = this.#elementCard.querySelector('.element__bin');
     this.#cardImage = this.#elementCard.querySelector('.element__picture');
-    this._delete = this._delete.bind(this);
     this._like = this._like.bind(this);
   }
 
@@ -26,14 +25,14 @@ class Card {
     this.#likeButton.classList.toggle('element__like_pressed');
   }
 
-  _delete () {
+  #delete = ()=> {
     this.#elementCard.remove();
     this.#elementCard = null;
   }
 
   _setEventListeners() {
     this.#likeButton.addEventListener("click", this._like);
-    this.#deleteButton.addEventListener("click", this._delete);
+    this.#deleteButton.addEventListener("click", this.#delete);
     this.#cardImage.addEventListener('click', this.#handleCardClick);
   }
 

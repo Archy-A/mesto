@@ -7,7 +7,7 @@
   <title>Mesto Russia</title>
   <link rel="shortcut icon" type="image/jpg" href="./images/favicon.ico"/>
 
-  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
+  <link rel="stylesheet" href="./pages/index.css">
 </head>
 
 <body class="root">
@@ -20,12 +20,12 @@
     <main>
 
       <section class="profile">
-        <img class="profile__avatar" src="<%=require('./images/Kusto.jpg')%>" alt="Жак-Ив Кусто.">
-        <!-- <img class="profile__avatar" src="./images/Kusto.jpg" alt="Жак-Ив Кусто."> -->
+        <!-- <img class="profile__avatar" src="<%=require('./images/Kusto.jpg')%>" alt="Жак-Ив Кусто."> -->
+        <img class="profile__avatar" src="./images/Kusto.jpg" alt="Жак-Ив Кусто.">
         <div class="profile__info">
           <div class="profile__group">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <p class="profile__activity">Исследователь океана</p>
+            <h1 class="profile__name">Жак</h1>
+            <p class="profile__activity">Исследователь</p>
           </div>
           <button type="button" class="profile__edit-button" aria-label="Карандаш, редактировать профиль"></button>
         </div>
@@ -46,10 +46,10 @@
         <button type="button" class="popup__btn-close" aria-label="Крестик, закрыть окно рекдактирования"></button>
         <form method="post" name="popupEditForm" class="popup__form popup__edit-form" novalidate>
           <h2 class="popup__header">Редактировать профиль</h2>
-          <input id="popup__named" type="text" name="profileName" placeholder="Имя"
+          <input id="popup__named" type="text" name="name" placeholder="Имя"
             class="popup__edit popup__edit_name_copy" minlength="2" maxlength="40" required>
           <span class="popup__input-error popup__named-error">error</span>
-          <input id="popup__activityinput" type="text" name="profileActivity" placeholder="Род деятельности"
+          <input id="popup__activityinput" type="text" name="about" placeholder="Род деятельности"
              class="popup__edit popup__edit_activity_title" minlength="2" maxlength="200"  required>
           <span class="popup__input-error popup__activityinput-error"></span>
           <button type="submit" class="popup__save"
@@ -97,7 +97,7 @@
     </article>
   </template>
 
-  <!-- <script type="module" src="./pages/index.js"></script> -->
+  <script type="module" src="./pages/index.js"></script>
 
 </body>
 
