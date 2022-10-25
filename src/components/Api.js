@@ -1,5 +1,6 @@
 import {
   token,
+  link
 } from '../utils/constants.js'
 
 class Api {
@@ -11,7 +12,7 @@ class Api {
   }
 
   getInitialCards() {
-    return fetch(`https://nomoreparties.co/v1/cohort-52/${this.endPoint}`, {
+    return fetch(`${link}${this.endPoint}`, {
       headers: this.auth
     })
       .then(res => {
@@ -26,7 +27,7 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(`https://nomoreparties.co/v1/cohort-52/${this.endPoint}`, {
+    return fetch(`${link}${this.endPoint}`, {
       headers: this.auth
     })
       .then(res => {
@@ -47,6 +48,25 @@ class Api {
       body: JSON.stringify({
         name: name,
         about: about
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .then( (res) => {
+        return res
+      })
+  }
+
+  setAva(auth, avatar) {
+    return fetch(`${link}users/me/avatar`, {
+      method: 'PATCH',
+      headers: auth,
+      body: JSON.stringify({
+        avatar: avatar["name"]
       })
     })
       .then(res => {
@@ -81,7 +101,7 @@ class Api {
   }
 
   deleteCard(id) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-52/cards/${id}`, {
+    return fetch(`${link}cards/${id}`, {
       method: 'DELETE',
       headers: {
       authorization: token,
@@ -107,7 +127,7 @@ class Api {
     else {
       method = 'PUT';
     }
-     return fetch(`https://mesto.nomoreparties.co/v1/cohort-52/cards/${element._id}/likes`, {
+     return fetch(`${link}cards/${element._id}/likes`, {
         method: method,
         headers: {
         authorization: token,

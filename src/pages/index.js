@@ -8,10 +8,10 @@ import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js'
 import { PopupWithForm } from '../components/PopupWithForm.js'
 import { UserInfo } from '../components/UserInfo.js'
 import { FormValidator } from '../components/FormValidator.js'
-import { //initialCards,
-         validationConfig,
+import { validationConfig,
          ServerInfoData,
          token,
+         ava,
          profilePopup,
          cardPopup,
          inputFieldActivity,
@@ -20,6 +20,7 @@ import { //initialCards,
          buttonCard,
          imagePopupSelector,
          cardPopupSelector,
+         avaPopupSelector,
          containerSelector,
          profileInfoNameSelector,
          profileInfoActivitySelector,
@@ -143,6 +144,19 @@ const popupCardForm = new PopupWithForm(cardPopupSelector,
 popupCardForm.setEventListeners();
 
 
+// add ava popup instance
+const popupAvaForm = new PopupWithForm(avaPopupSelector,
+  (link) => {
+    apiCards.setAva(ServerInfoData.headers, link)
+      .then(avaFormServer => {
+      ava.src = avaFormServer["avatar"]
+      });
+    popupAvaForm.close();
+  }
+);
+popupAvaForm.setEventListeners();
+
+
 
 buttonCard.addEventListener('click', () => {
   popupCardForm.open();
@@ -156,3 +170,7 @@ buttonProfile.addEventListener('click', () => {
   inputFieldActivity.value = userData.info;
   profileformValidator.resetError();
 });
+
+ava.addEventListener('click', () => {
+  popupAvaForm.open();
+})
