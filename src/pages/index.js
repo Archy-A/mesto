@@ -4,6 +4,7 @@ import { Card } from '../components/Card.js'
 import { Api } from '../components/Api.js'
 import { Section } from '../components/Section.js'
 import { PopupWithImage } from '../components/PopupWithImage.js'
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js'
 import { PopupWithForm } from '../components/PopupWithForm.js'
 import { UserInfo } from '../components/UserInfo.js'
 import { FormValidator } from '../components/FormValidator.js'
@@ -25,17 +26,6 @@ import { //initialCards,
          profileInfoAvatar
        } from '../utils/constants.js'
 
-const popupImage = new PopupWithImage(imagePopupSelector);
-popupImage.setEventListeners();
-
-// create card function
-const elementTemplatSelector = '.element-template';
-function createCard (item, elementTemplatSelector) {
-  const card = new Card (item, elementTemplatSelector, () => popupImage.open(item));
-  const cardElement = card.cardCreate();
-  return cardElement;
-}
-
 // Api for cards
 const apiCards = new Api (
   {
@@ -44,7 +34,31 @@ const apiCards = new Api (
       authorization: token,
     }
   }
-)
+);
+
+const popupImage = new PopupWithImage(imagePopupSelector);
+popupImage.setEventListeners();
+
+const deletePopupSelector = '.popup-delete';
+const popupDeleteForm = new PopupWithConfirmation(deletePopupSelector);
+popupDeleteForm.setEventListeners();
+
+
+// create card function
+const elementTemplatSelector = '.element-template';
+function createCard (item, elementTemplatSelector) {
+  const card = new Card (item,
+                         elementTemplatSelector,
+                         () => popupImage.open(item),
+                         popupDeleteForm,
+                         apiCards.deleteCard,
+                         apiCards.likeCard,
+                         );
+  const cardElement = card.cardCreate();
+  return cardElement;
+}
+
+
 
 // function for getting cards from server
 function getCardsFromServer () {
@@ -93,13 +107,10 @@ function getUserInfoFromServer () {
     })
 }
 
+// load user information from server
 const userInfo = new UserInfo(profileInfoNameSelector, profileInfoActivitySelector, profileInfoAvatar);
-
-// await apiUser.setUserInfo();
 const userInforServer = await getUserInfoFromServer();
 userInfo.setUserInfo(userInforServer);
-// console.log(userInforServer);
-
 
 // user info
 const profilePopupSelector = '.popup-edit';
@@ -119,16 +130,17 @@ popupProfileForm.setEventListeners();
 // add new card instance
 const popupCardForm = new PopupWithForm(cardPopupSelector,
     (item) => {
-      const cardElement = createCard(item, elementTemplatSelector);
-      defaultCardList.addItem(cardElement);
       apiCards.setCard(ServerInfoData.headers,
                        item.name,
                        item.link)
+        .then(card => {
+          const cardElement = createCard(card, elementTemplatSelector);
+          defaultCardList.addItem(cardElement);
+        });
       popupCardForm.close();
     }
   );
 popupCardForm.setEventListeners();
-
 
 
 

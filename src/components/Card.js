@@ -2,6 +2,8 @@ import {
   token,
 } from '../utils/constants.js'
 
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js'
+
 class Card {
 
   #element;
@@ -13,9 +15,15 @@ class Card {
   #cardSelector;
   #handleCardClick;
   #amountLikes;
+  #handleCardDeleteApi;
+  #popupDeleteForm;
+  #handleCardLikeApi;
 
-  constructor(element, cardSelector, handleCardClick) {
+  constructor(element, cardSelector, handleCardClick, popupDeleteForm, handleCardDeleteApi, handleCardLikeApi) {
     this.#handleCardClick = handleCardClick;
+    this.#handleCardDeleteApi = handleCardDeleteApi;
+    this.#handleCardLikeApi = handleCardLikeApi;
+    this.#popupDeleteForm = popupDeleteForm;
     this.#element = element;
     this.#cardSelector = cardSelector;
     this.#elementCardTemplate = document.querySelector(this.#cardSelector).content.cloneNode(true)
@@ -26,33 +34,6 @@ class Card {
     this.#amountLikes = this.#elementCard.querySelector('.amount-likes');
     this._like = this._like.bind(this);
     this.myId = '48b3ab75093bc34c58d271be';
-  }
-
-
-  _saveLikeToServer () {
-    let method = '';
-    if (this.#element.likes.find(o => o._id === this.myId )) {
-      method = 'DELETE';
-    }
-    else {
-      method = 'PUT';
-    }
-     return fetch(`https://mesto.nomoreparties.co/v1/cohort-52/cards/${this.#element._id}/likes`, {
-        method: method,
-        headers: {
-        authorization: token,
-        'Content-Type': 'application/json'
-        },
-      })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .then( (res) => {
-        return res;
-      })
   }
 
   _updateLikes () {
@@ -68,22 +49,34 @@ class Card {
   }
 
   _like () {
-    this._saveLikeToServer().then( (data) => {
+    this.#handleCardLikeApi(this.#element).then((data) => {
        this.#element.likes = data.likes;
        this._updateLikes();
     });
 
     }
 
-  #delete = ()=> {
-    this.#elementCard.remove();
-    this.#elementCard = null;
+  confirmDelete = () => {
+    this.#popupDeleteForm.open(this.delete);
+  }
+
+  delete = () => {
+    this.#handleCardDeleteApi(this.#element._id).then(() => {
+      this.#elementCard.remove();
+      this.#elementCard = null;
+    });
   }
 
   _setEventListeners() {
     this.#likeButton.addEventListener("click", this._like);
-    this.#deleteButton.addEventListener("click", this.#delete);
+    this.#deleteButton.addEventListener("click", () => this.confirmDelete());
     this.#cardImage.addEventListener('click', this.#handleCardClick);
+  }
+
+  _showBinForMyCards () {
+    if (this.#element["owner"]._id !== this.myId) {
+      this.#deleteButton.style.display = 'none';
+    }
   }
 
   cardCreate () {
@@ -92,6 +85,10 @@ class Card {
     this.#cardImage.alt = this.#element.name;
 
     this._updateLikes();
+
+    if (this.#element["_id"] !== undefined) {
+      this._showBinForMyCards();
+    }
 
     this._setEventListeners();
     return this.#elementCard;
