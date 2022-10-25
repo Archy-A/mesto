@@ -12,6 +12,7 @@ import { validationConfig,
          ServerInfoData,
          token,
          ava,
+         avaPopup,
          profilePopup,
          cardPopup,
          inputFieldActivity,
@@ -90,6 +91,9 @@ profileformValidator.enableValidation();
 const cardformValidator = new FormValidator (cardPopup, validationConfig);
 cardformValidator.enableValidation();
 
+const avaFormValidator = new FormValidator (avaPopup, validationConfig);
+avaFormValidator.enableValidation();
+
 
 // Api for user
 const apiUser = new Api (
@@ -156,8 +160,6 @@ const popupAvaForm = new PopupWithForm(avaPopupSelector,
 );
 popupAvaForm.setEventListeners();
 
-
-
 buttonCard.addEventListener('click', () => {
   popupCardForm.open();
   cardformValidator.resetError();
@@ -173,4 +175,5 @@ buttonProfile.addEventListener('click', () => {
 
 ava.addEventListener('click', () => {
   popupAvaForm.open();
+  avaFormValidator.resetError();
 })

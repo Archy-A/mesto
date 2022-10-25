@@ -9,6 +9,7 @@ export const validationConfig = {
 
 export const profilePopup = document.querySelector('.popup-edit');
 export const cardPopup = document.querySelector('.popup-add');
+export const avaPopup = document.querySelector('.popup-ava');
 
 export const profileInfoName = document.querySelector('.profile__name');
 export const profileInfoActivity = document.querySelector('.profile__activity');
