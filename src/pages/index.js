@@ -12,6 +12,7 @@ import { validationConfig,
          ServerInfoData,
          token,
          ava,
+         avaOnhover,
          avaPopup,
          profilePopup,
          cardPopup,
@@ -173,7 +174,7 @@ buttonProfile.addEventListener('click', () => {
   profileformValidator.resetError();
 });
 
-ava.addEventListener('click', () => {
+avaOnhover.addEventListener('click', () => {
   popupAvaForm.open();
   avaFormValidator.resetError();
 })

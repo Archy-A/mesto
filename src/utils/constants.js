@@ -24,6 +24,7 @@ export const formCardInserting = document.querySelector('.popup__add-form');
 export const formProfileEditing = document.querySelector('.popup__edit-form');
 
 export const ava = document.querySelector('.profile__avatar');
+export const avaOnhover = document.querySelector('.profile__avatar-hover');
 
 export const imagePopupSelector = '.popup-photo';
 export const cardPopupSelector = '.popup-add';

@@ -49,3 +49,5 @@
 
 @import url(../blocks/popup-delete/popup-delete.css);
 @import url(../blocks/popup-ava/popup-ava.css);
+
+@import url(../blocks/profile/__avatar-hover/profile__avatar-hover.css);
