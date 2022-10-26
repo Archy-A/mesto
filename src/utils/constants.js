@@ -17,12 +17,14 @@ export const inputFieldActivity = profilePopup.querySelector('.popup__edit_activ
 export const inputFieldName = profilePopup.querySelector('.popup__edit_name_copy');
 export const buttonProfile = document.querySelector('.profile__edit-button');
 export const buttonCard = document.querySelector('.profile__add-button');
+export const buttonSaveAva = document.getElementById('popup__ava-save-button');
+export const buttonSaveCard =  document.getElementById('popup__card-save-button');
+export const buttonSaveProfile = document.getElementById('popup__profile-save-button');
 export const elementContainer = document.querySelector('.elements');
 export const cardName = cardPopup.querySelector('.popup__edit_card-name');
 export const cardLink = cardPopup.querySelector('.popup__edit_cardlink');
 export const formCardInserting = document.querySelector('.popup__add-form');
 export const formProfileEditing = document.querySelector('.popup__edit-form');
-
 export const ava = document.querySelector('.profile__avatar');
 export const avaOnhover = document.querySelector('.profile__avatar-hover');
 

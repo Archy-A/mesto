@@ -12,6 +12,9 @@ import { validationConfig,
          ServerInfoData,
          token,
          ava,
+         buttonSaveAva,
+         buttonSaveCard,
+         buttonSaveProfile,
          avaOnhover,
          avaPopup,
          profilePopup,
@@ -61,13 +64,15 @@ function createCard (item, elementTemplatSelector) {
   return cardElement;
 }
 
-
-
 // function for getting cards from server
 function getCardsFromServer () {
-  return apiCards.getInitialCards().then( (data) => {
+  return apiCards.getInitialCards()
+    .then( (data) => {
       return data;
     })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 // render card function
@@ -108,9 +113,13 @@ const apiUser = new Api (
 
 // function for getting user info from server
 function getUserInfoFromServer () {
-  return apiUser.getUserInfo().then( (data) => {
+  return apiUser.getUserInfo()
+  .then( (data) => {
       return data;
     })
+  .catch((err) => {
+    console.log(err);
+  });
 }
 
 // load user information from server
@@ -122,41 +131,59 @@ userInfo.setUserInfo(userInforServer);
 const profilePopupSelector = '.popup-edit';
 const popupProfileForm = new PopupWithForm(profilePopupSelector,
   (item) => {
+    buttonSaveProfile.textContent = 'Сохранение...';
     userInfo.setUserInfo(item)
     apiUser.setUserInfo(ServerInfoData.baseUrl,
                         ServerInfoData.headers,
                         userInfo.getUserInfo().name,
-                        userInfo.getUserInfo().info);
-    popupProfileForm.close();
+                        userInfo.getUserInfo().info)
+              .then( () => {
+                buttonSaveProfile.textContent = 'Сохранить';
+                popupProfileForm.close();
+              })
+              .catch((err) => {
+                console.log(err);
+                popupProfileForm.close();
+              });
   }
 );
 popupProfileForm.setEventListeners();
 
-
 // add new card instance
 const popupCardForm = new PopupWithForm(cardPopupSelector,
     (item) => {
+      buttonSaveCard.textContent = 'Создание...';
       apiCards.setCard(ServerInfoData.headers,
                        item.name,
                        item.link)
         .then(card => {
           const cardElement = createCard(card, elementTemplatSelector);
           defaultCardList.addItem(cardElement);
+          buttonSaveCard.textContent = 'Создать';
+          popupCardForm.close();
+        })
+        .catch((err) => {
+          console.log(err);
+          popupCardForm.close();
         });
-      popupCardForm.close();
     }
   );
 popupCardForm.setEventListeners();
 
-
 // add ava popup instance
 const popupAvaForm = new PopupWithForm(avaPopupSelector,
   (link) => {
+    buttonSaveAva.textContent = 'Сохранение...';
     apiCards.setAva(ServerInfoData.headers, link)
       .then(avaFormServer => {
-      ava.src = avaFormServer["avatar"]
+        ava.src = avaFormServer["avatar"]
+        buttonSaveAva.textContent = 'Сохранить';
+        popupAvaForm.close();
+      })
+      .catch((err) => {
+        console.log(err);
+        popupAvaForm.close();
       });
-    popupAvaForm.close();
   }
 );
 popupAvaForm.setEventListeners();
