@@ -1,8 +1,3 @@
-import {
-  alertMessage,
-  buttonDelete
-} from '../utils/constants.js'
-
 class Card {
 
   #element;
@@ -14,15 +9,13 @@ class Card {
   #cardSelector;
   #handleCardClick;
   #amountLikes;
-  #handleCardDeleteApi;
-  #popupDeleteForm;
-  #handleCardLikeApi;
+  #handleDeleteClicked;
+  #handleLikeClicked;
 
-  constructor(element, cardSelector, handleCardClick, popupDeleteForm, handleCardDeleteApi, handleCardLikeApi, myId) {
+  constructor(element, cardSelector, handleCardClick, handleDeleteClicked, handleLikeClicked, myId) {
     this.#handleCardClick = handleCardClick;
-    this.#handleCardDeleteApi = handleCardDeleteApi;
-    this.#handleCardLikeApi = handleCardLikeApi;
-    this.#popupDeleteForm = popupDeleteForm;
+    this.#handleDeleteClicked = handleDeleteClicked;
+    this.#handleLikeClicked = handleLikeClicked;
     this.#element = element;
     this.#cardSelector = cardSelector;
     this.#elementCardTemplate = document.querySelector(this.#cardSelector).content.cloneNode(true)
@@ -31,7 +24,7 @@ class Card {
     this.#deleteButton = this.#elementCard.querySelector('.element__bin');
     this.#cardImage = this.#elementCard.querySelector('.element__picture');
     this.#amountLikes = this.#elementCard.querySelector('.amount-likes');
-    this._like = this._like.bind(this);
+    this.like = this.like.bind(this);
     this.myId = myId;
   }
 
@@ -47,39 +40,19 @@ class Card {
     }
   }
 
-  _like () {
-    this.#handleCardLikeApi(this.#element).then((data) => {
-       this.#element.likes = data.likes;
-       this._updateLikes();
-    });
-
-    }
-
-  confirmDelete = () => {
-    this.#popupDeleteForm.open(this.delete);
+  like (likes) {
+    this.#element.likes = likes;
+    this._updateLikes();
   }
 
   delete = () => {
-    buttonDelete.textContent = 'Удаление...';
-    this.#handleCardDeleteApi(this.#element._id)
-      .then( () => {
-        this.#popupDeleteForm.close();
-        this.#elementCard.remove();
-        this.#elementCard = null;
-      })
-      .catch((err) => {
-        console.log(err);
-        window.alert(`${alertMessage} ${err}`);
-        this.#popupDeleteForm.close();
-      })
-      .finally(() => {
-        buttonDelete.textContent = 'Да';
-      })
+    this.#elementCard.remove();
+    this.#elementCard = null;
   };
 
   _setEventListeners() {
-    this.#likeButton.addEventListener("click", this._like);
-    this.#deleteButton.addEventListener("click", () => this.confirmDelete());
+    this.#likeButton.addEventListener("click", () => this.#handleLikeClicked(this.#element, this));
+    this.#deleteButton.addEventListener("click", () => this.#handleDeleteClicked(this.#element._id, this));
     this.#cardImage.addEventListener('click', this.#handleCardClick);
   }
 

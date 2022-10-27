@@ -14,6 +14,7 @@ import { validationConfig,
          buttonSaveAva,
          buttonSaveCard,
          buttonSaveProfile,
+         buttonDelete,
          avaOnhover,
          avaPopup,
          profilePopup,
@@ -68,15 +69,37 @@ const popupDeleteForm = new PopupWithConfirmation(deletePopupSelector);
 popupDeleteForm.setEventListeners();
 
 
+function handleDeleteClicked (id, card) {
+  popupDeleteForm.open(() => {
+    buttonDelete.textContent = 'Удаление...';
+    api.deleteCard(id)
+      .then( () => {
+        popupDeleteForm.close();
+        card.delete();
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert(`${alertMessage} ${err}`);
+        popupDeleteForm.close();
+      })
+      .finally(() => {
+        buttonDelete.textContent = 'Да';
+      })
+  });
+}
+
+function handleLikeClicked (element, card) {
+  api.likeCard(element).then(data => card.like(data.likes));
+}
+
 // create card function
 const elementTemplatSelector = '.element-template';
 function createCard (item, elementTemplatSelector) {
   const card = new Card (item,
                          elementTemplatSelector,
                          () => popupImage.open(item),
-                         popupDeleteForm,
-                         api.deleteCard,
-                         api.likeCard,
+                         handleDeleteClicked,
+                         handleLikeClicked,
                          myId,
                          );
   const cardElement = card.cardCreate();

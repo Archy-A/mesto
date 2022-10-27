@@ -8,7 +8,6 @@ class Api {
     this.endPoint = options.baseUrl;
     this.auth = options.headers;
     this.body = options.body;
-    this.myId = '48b3ab75093bc34c58d271be';
     this.myId = null;
   }
 
