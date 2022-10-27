@@ -1,8 +1,7 @@
 import {
-  token,
+  alertMessage,
+  buttonDelete
 } from '../utils/constants.js'
-
-import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js'
 
 class Card {
 
@@ -19,7 +18,7 @@ class Card {
   #popupDeleteForm;
   #handleCardLikeApi;
 
-  constructor(element, cardSelector, handleCardClick, popupDeleteForm, handleCardDeleteApi, handleCardLikeApi) {
+  constructor(element, cardSelector, handleCardClick, popupDeleteForm, handleCardDeleteApi, handleCardLikeApi, myId) {
     this.#handleCardClick = handleCardClick;
     this.#handleCardDeleteApi = handleCardDeleteApi;
     this.#handleCardLikeApi = handleCardLikeApi;
@@ -33,7 +32,7 @@ class Card {
     this.#cardImage = this.#elementCard.querySelector('.element__picture');
     this.#amountLikes = this.#elementCard.querySelector('.amount-likes');
     this._like = this._like.bind(this);
-    this.myId = '48b3ab75093bc34c58d271be';
+    this.myId = myId;
   }
 
   _updateLikes () {
@@ -61,11 +60,22 @@ class Card {
   }
 
   delete = () => {
-    this.#handleCardDeleteApi(this.#element._id).then(() => {
-      this.#elementCard.remove();
-      this.#elementCard = null;
-    });
-  }
+    buttonDelete.textContent = 'Удаление...';
+    this.#handleCardDeleteApi(this.#element._id)
+      .then( () => {
+        this.#popupDeleteForm.close();
+        this.#elementCard.remove();
+        this.#elementCard = null;
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert(`${alertMessage} ${err}`);
+        this.#popupDeleteForm.close();
+      })
+      .finally(() => {
+        buttonDelete.textContent = 'Да';
+      })
+  };
 
   _setEventListeners() {
     this.#likeButton.addEventListener("click", this._like);

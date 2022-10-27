@@ -1,4 +1,4 @@
-import './index.css';
+// import './index.css';
 
 import { Card } from '../components/Card.js'
 import { Api } from '../components/Api.js'
@@ -10,7 +10,6 @@ import { UserInfo } from '../components/UserInfo.js'
 import { FormValidator } from '../components/FormValidator.js'
 import { validationConfig,
          ServerInfoData,
-         token,
          ava,
          buttonSaveAva,
          buttonSaveCard,
@@ -18,6 +17,7 @@ import { validationConfig,
          avaOnhover,
          avaPopup,
          profilePopup,
+         alertMessage,
          cardPopup,
          inputFieldActivity,
          inputFieldName,
@@ -32,15 +32,33 @@ import { validationConfig,
          profileInfoAvatar
        } from '../utils/constants.js'
 
-// Api for cards
-const apiCards = new Api (
+
+// Api instance creation
+const api = new Api (
   {
-    baseUrl: 'cards',
-    headers: {
-      authorization: token,
-    }
+    baseUrl: ['cards', 'users/me']
   }
 );
+
+// function for getting user info from server
+function getUserInfoFromServer () {
+  return api.getUserInfo()
+  .then( (data) => {
+      return data;
+    })
+  .catch((err) => {
+    console.log(err);
+  });
+}
+
+// load user information from server
+const userInfo = new UserInfo(profileInfoNameSelector, profileInfoActivitySelector, profileInfoAvatar);
+const userInforServer = await getUserInfoFromServer();
+userInfo.setUserInfo(userInforServer);
+
+// set my Id from server to API instance
+const myId = userInforServer._id;
+api.setId(myId);
 
 const popupImage = new PopupWithImage(imagePopupSelector);
 popupImage.setEventListeners();
@@ -57,8 +75,9 @@ function createCard (item, elementTemplatSelector) {
                          elementTemplatSelector,
                          () => popupImage.open(item),
                          popupDeleteForm,
-                         apiCards.deleteCard,
-                         apiCards.likeCard,
+                         api.deleteCard,
+                         api.likeCard,
+                         myId,
                          );
   const cardElement = card.cardCreate();
   return cardElement;
@@ -66,7 +85,7 @@ function createCard (item, elementTemplatSelector) {
 
 // function for getting cards from server
 function getCardsFromServer () {
-  return apiCards.getInitialCards()
+  return api.getInitialCards()
     .then( (data) => {
       return data;
     })
@@ -78,7 +97,7 @@ function getCardsFromServer () {
 // render card function
 function renderer (item) {
   const cardElement = createCard(item, elementTemplatSelector);
-  this.addItem(cardElement);
+  this.addItemAppend(cardElement);
 }
 
 // render cards from array
@@ -101,50 +120,27 @@ const avaFormValidator = new FormValidator (avaPopup, validationConfig);
 avaFormValidator.enableValidation();
 
 
-// Api for user
-const apiUser = new Api (
-  {
-    baseUrl: 'users/me',
-    headers: {
-      authorization: token,
-    }
-  }
-)
-
-// function for getting user info from server
-function getUserInfoFromServer () {
-  return apiUser.getUserInfo()
-  .then( (data) => {
-      return data;
-    })
-  .catch((err) => {
-    console.log(err);
-  });
-}
-
-// load user information from server
-const userInfo = new UserInfo(profileInfoNameSelector, profileInfoActivitySelector, profileInfoAvatar);
-const userInforServer = await getUserInfoFromServer();
-userInfo.setUserInfo(userInforServer);
-
 // user info
 const profilePopupSelector = '.popup-edit';
 const popupProfileForm = new PopupWithForm(profilePopupSelector,
   (item) => {
     buttonSaveProfile.textContent = 'Сохранение...';
-    userInfo.setUserInfo(item)
-    apiUser.setUserInfo(ServerInfoData.baseUrl,
-                        ServerInfoData.headers,
-                        userInfo.getUserInfo().name,
-                        userInfo.getUserInfo().info)
+    api.setUserInfo(ServerInfoData.baseUrl,
+                    item.name,
+                    item.about
+                    )
               .then( () => {
                 buttonSaveProfile.textContent = 'Сохранить';
+                userInfo.setUserInfo(item)
                 popupProfileForm.close();
               })
               .catch((err) => {
                 console.log(err);
-                popupProfileForm.close();
-              });
+                window.alert(`${alertMessage} ${err}`);
+              })
+              .finally(() => {
+                buttonSaveProfile.textContent = 'Сохранить';
+              })
   }
 );
 popupProfileForm.setEventListeners();
@@ -153,19 +149,21 @@ popupProfileForm.setEventListeners();
 const popupCardForm = new PopupWithForm(cardPopupSelector,
     (item) => {
       buttonSaveCard.textContent = 'Создание...';
-      apiCards.setCard(ServerInfoData.headers,
-                       item.name,
+      api.setCard(item.name,
                        item.link)
         .then(card => {
           const cardElement = createCard(card, elementTemplatSelector);
-          defaultCardList.addItem(cardElement);
+          defaultCardList.addItemPrepend(cardElement);
           buttonSaveCard.textContent = 'Создать';
           popupCardForm.close();
         })
         .catch((err) => {
           console.log(err);
-          popupCardForm.close();
-        });
+          window.alert(`${alertMessage} ${err}`);
+        })
+        .finally(() => {
+          buttonSaveCard.textContent = 'Создать';
+        })
     }
   );
 popupCardForm.setEventListeners();
@@ -174,7 +172,7 @@ popupCardForm.setEventListeners();
 const popupAvaForm = new PopupWithForm(avaPopupSelector,
   (link) => {
     buttonSaveAva.textContent = 'Сохранение...';
-    apiCards.setAva(ServerInfoData.headers, link)
+    api.setAva(link)
       .then(avaFormServer => {
         ava.src = avaFormServer["avatar"]
         buttonSaveAva.textContent = 'Сохранить';
@@ -182,8 +180,11 @@ const popupAvaForm = new PopupWithForm(avaPopupSelector,
       })
       .catch((err) => {
         console.log(err);
-        popupAvaForm.close();
-      });
+        window.alert(`${alertMessage} ${err}`);
+      })
+      .finally(() => {
+        buttonSaveAva.textContent = 'Сохранить';
+      })
   }
 );
 popupAvaForm.setEventListeners();

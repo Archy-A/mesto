@@ -9,11 +9,14 @@ class Api {
     this.auth = options.headers;
     this.body = options.body;
     this.myId = '48b3ab75093bc34c58d271be';
+    this.myId = null;
   }
 
   getInitialCards() {
-    return fetch(`${link}${this.endPoint}`, {
-      headers: this.auth
+    return fetch(`${link}${this.endPoint[0]}`, {
+      headers: {
+        authorization: token,
+      }
     })
       .then(res => {
         if (res.ok) {
@@ -27,8 +30,11 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(`${link}${this.endPoint}`, {
-      headers: this.auth
+    return fetch(`${link}${this.endPoint[1]}`,
+    {
+      headers: {
+        authorization: token,
+      }
     })
       .then(res => {
         if (res.ok) {
@@ -41,10 +47,13 @@ class Api {
       })
   }
 
-  setUserInfo(baseUrl, auth, name, about) {
+  setUserInfo(baseUrl, name, about) {
     return fetch(baseUrl, {
       method: 'PATCH',
-      headers: auth,
+      headers: {
+         authorization: token,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         name: name,
         about: about
@@ -61,12 +70,15 @@ class Api {
       })
   }
 
-  setAva(auth, avatar) {
+  setAva(avatar) {
     return fetch(`${link}users/me/avatar`, {
       method: 'PATCH',
-      headers: auth,
+      headers: {
+        authorization: token,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
-        avatar: avatar["name"]
+      avatar: avatar["name"]
       })
     })
       .then(res => {
@@ -80,10 +92,13 @@ class Api {
       })
   }
 
-  setCard(auth, name, link) {
+  setCard(name, link) {
     return fetch(`https://nomoreparties.co/v1/cohort-52/cards`, {
       method: 'POST',
-      headers: auth,
+      headers: {
+        authorization: token,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         name: name,
         link: link
@@ -143,6 +158,10 @@ class Api {
       .then( (res) => {
         return res;
       })
+  }
+
+  setId(myId) {
+    this.myId = myId;
   }
 
 }
