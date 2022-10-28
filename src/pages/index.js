@@ -43,12 +43,6 @@ const api = new Api (
 // function for getting user info from server
 function getUserInfoFromServer () {
   return api.getUserInfo()
-  .then( (data) => {
-      return data;
-    })
-  .catch((err) => {
-    console.log(err);
-  });
 }
 
 const userInfo = new UserInfo(profileInfoNameSelector, profileInfoActivitySelector, profileInfoAvatar);
