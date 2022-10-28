@@ -33,7 +33,6 @@ import { validationConfig,
          profileInfoAvatar
        } from '../utils/constants.js'
 
-
 // Api instance creation
 const api = new Api (
   {
@@ -77,8 +76,6 @@ getDataFromServer().then(data => {
   }, containerSelector);
   defaultCardList.renderItems();
 });
-
-
 
 const popupImage = new PopupWithImage(imagePopupSelector);
 popupImage.setEventListeners();
@@ -128,12 +125,6 @@ function createCard (item, elementTemplatSelector) {
 // function for getting cards from server
 function getCardsFromServer () {
   return api.getInitialCards()
-    .then( (data) => {
-      return data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 }
 
 // render card function
@@ -141,26 +132,6 @@ function renderer (item) {
   const cardElement = createCard(item, elementTemplatSelector);
   this.addItemAppend(cardElement);
 }
-
-let userInforServer1 = null;
-let initialCards1 = null;
-
-// const sendDataRequest = Promise.all([getUserInfoFromServer(), getCardsFromServer()]);
-// sendDataRequest.then( (data) => {
-//   userInforServer1 = data[0];
-//   initialCards1 = data[1];
-//   return userInforServer1;
-// })
-// .catch((err) => {
-//   console.log(err);
-// });
-
-// console.log(userInforServer1)
-// console.log(initialCards1)
-
-
-
-
 
 // create card's class instance for EDIT-PROFILE and CARD-ADD popups
 const profileformValidator = new FormValidator (profilePopup, validationConfig);
