@@ -52,14 +52,33 @@ function getUserInfoFromServer () {
   });
 }
 
-// load user information from server
 const userInfo = new UserInfo(profileInfoNameSelector, profileInfoActivitySelector, profileInfoAvatar);
-const userInforServer = await getUserInfoFromServer();
-userInfo.setUserInfo(userInforServer);
 
-// set my Id from server to API instance
-const myId = userInforServer._id;
-api.setId(myId);
+function getDataFromServer () {
+  return Promise.all([getUserInfoFromServer(), getCardsFromServer()]).then(results => {
+    return {
+      'users': results[0],
+      'cards': results[1]
+    }
+  });
+}
+
+let defaultCardList;
+getDataFromServer().then(data => {
+  // load user information from server
+  userInfo.setUserInfo(data.users);
+  // set my Id from server to API instance
+  api.setId(data.users._id);
+
+  // render cards from array
+  defaultCardList = new Section({
+    data: data.cards,
+    renderer: renderer
+  }, containerSelector);
+  defaultCardList.renderItems();
+});
+
+
 
 const popupImage = new PopupWithImage(imagePopupSelector);
 popupImage.setEventListeners();
@@ -100,7 +119,7 @@ function createCard (item, elementTemplatSelector) {
                          () => popupImage.open(item),
                          handleDeleteClicked,
                          handleLikeClicked,
-                         myId,
+                         api.getId(),
                          );
   const cardElement = card.cardCreate();
   return cardElement;
@@ -123,13 +142,24 @@ function renderer (item) {
   this.addItemAppend(cardElement);
 }
 
-// render cards from array
-const initialCards = await getCardsFromServer();
-const defaultCardList = new Section({
-  data: initialCards,
-  renderer: renderer
-}, containerSelector);
-defaultCardList.renderItems();
+let userInforServer1 = null;
+let initialCards1 = null;
+
+// const sendDataRequest = Promise.all([getUserInfoFromServer(), getCardsFromServer()]);
+// sendDataRequest.then( (data) => {
+//   userInforServer1 = data[0];
+//   initialCards1 = data[1];
+//   return userInforServer1;
+// })
+// .catch((err) => {
+//   console.log(err);
+// });
+
+// console.log(userInforServer1)
+// console.log(initialCards1)
+
+
+
 
 
 // create card's class instance for EDIT-PROFILE and CARD-ADD popups

@@ -11,22 +11,27 @@ class Api {
     this.myId = null;
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   getInitialCards() {
     return fetch(`${link}${this.endPoint[0]}`, {
       headers: {
         authorization: token,
       }
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .then( (res) => {
-        return res
-      })
+    .then(res => {
+      return this._checkResponse(res);
+    })
+    .then( (res) => {
+      return res
+    })
   }
+
 
   getUserInfo() {
     return fetch(`${link}${this.endPoint[1]}`,
@@ -36,10 +41,7 @@ class Api {
       }
     })
       .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res);
       })
       .then( (res) => {
         return res
@@ -59,10 +61,7 @@ class Api {
       })
     })
       .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res);
       })
       .then( (res) => {
         return res
@@ -81,10 +80,7 @@ class Api {
       })
     })
       .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res);
       })
       .then( (res) => {
         return res
@@ -104,10 +100,7 @@ class Api {
       })
     })
       .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res);
       })
       .then( (res) => {
         return res
@@ -123,10 +116,7 @@ class Api {
       },
     })
     .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._checkResponse(res);
     })
     .then( (res) => {
       return res;
@@ -149,10 +139,7 @@ class Api {
         },
       })
       .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res);
       })
       .then( (res) => {
         return res;
@@ -161,6 +148,10 @@ class Api {
 
   setId(myId) {
     this.myId = myId;
+  }
+
+  getId() {
+    return this.myId;
   }
 
 }
