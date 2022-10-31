@@ -8,7 +8,6 @@ class Api {
     this.endPoint = options.baseUrl;
     this.auth = options.headers;
     this.body = options.body;
-    this.myId = null;
   }
 
   _checkResponse(res) {
@@ -145,15 +144,6 @@ class Api {
         return res;
       })
   }
-
-  setId(myId) {
-    this.myId = myId;
-  }
-
-  getId() {
-    return this.myId;
-  }
-
 }
 
 export { Api as Api };

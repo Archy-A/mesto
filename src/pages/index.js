@@ -1,4 +1,4 @@
-import './index.css';
+// import './index.css';
 
 import { Card } from '../components/Card.js'
 import { Api } from '../components/Api.js'
@@ -60,8 +60,7 @@ let defaultCardList;
 getDataFromServer().then(data => {
   // load user information from server
   userInfo.setUserInfo(data.users);
-  // set my Id from server to API instance
-  api.setId(data.users._id);
+  userInfo.setId(data.users._id);
 
   // render cards from array
   defaultCardList = new Section({
@@ -90,7 +89,6 @@ function handleDeleteClicked (id, card) {
       .catch((err) => {
         console.log(err);
         window.alert(`${alertMessage} ${err}`);
-        popupDeleteForm.close();
       })
       .finally(() => {
         buttonDelete.textContent = 'Да';
@@ -110,7 +108,7 @@ function createCard (item, elementTemplatSelector) {
                          () => popupImage.open(item),
                          handleDeleteClicked,
                          handleLikeClicked,
-                         api.getId(),
+                         userInfo.getId(),
                          );
   const cardElement = card.cardCreate();
   return cardElement;
@@ -147,9 +145,9 @@ const popupProfileForm = new PopupWithForm(profilePopupSelector,
                     item.name,
                     item.about
                     )
-              .then( () => {
+              .then( (data) => {
                 buttonSaveProfile.textContent = 'Сохранить';
-                userInfo.setUserInfo(item)
+                userInfo.setUserInfo(data)
                 popupProfileForm.close();
               })
               .catch((err) => {

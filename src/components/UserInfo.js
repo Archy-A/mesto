@@ -3,6 +3,7 @@ class UserInfo {
     this.profileInfoName = document.querySelector(profileInfoName);
     this.profileInfoActivity = document.querySelector(profileInfoActivity);
     this.profileAva = document.querySelector(profileInfoAvatar);
+    this.myId = null;
   }
 
   getUserInfo() {
@@ -20,6 +21,15 @@ class UserInfo {
       this.profileAva.src = nameAndInfo.avatar;
     }
   }
+
+  setId(myId) {
+    this.myId = myId;
+  }
+
+  getId() {
+    return this.myId;
+  }
+
 }
 
 export { UserInfo as UserInfo };
