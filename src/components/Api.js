@@ -122,9 +122,9 @@ class Api {
     })
   }
 
-  likeCard (element) {
+  likeCard (element, userId) {
     let method = '';
-    if (element.likes.find(o => o._id === this.myId )) {
+    if (element.likes.find(o => o._id === userId )) {
       method = 'DELETE';
     }
     else {

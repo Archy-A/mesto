@@ -48,6 +48,7 @@ class Card {
   delete = () => {
     this.#elementCard.remove();
     this.#elementCard = null;
+    // debugger
   };
 
   _setEventListeners() {

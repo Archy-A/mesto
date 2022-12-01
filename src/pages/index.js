@@ -1,4 +1,4 @@
-import './index.css';
+// import './index.css';
 
 import { Card } from '../components/Card.js'
 import { Api } from '../components/Api.js'
@@ -97,7 +97,7 @@ function handleDeleteClicked (id, card) {
 }
 
 function handleLikeClicked (element, card) {
-  api.likeCard(element).then(data => card.like(data.likes));
+  api.likeCard(element, userInfo.getId()).then(data => card.like(data.likes));
 }
 
 // create card function
